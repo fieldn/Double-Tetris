@@ -1,17 +1,17 @@
 {
-	"name": "TetrisTetris",
-	"version": "0.0.1",
-    "private": true,
-	"scripts": {
-		"start": "node app.js"
-	},
-	"dependencies": {
-		"express": "4.13.x",
-		"cfenv": "1.0.x",
-		"bootstrap": "3.3.6"
-	},
-	"repository": {},
-	"engines": {
-		"node": "4.2.x"
-	} 
+  "name": "TetrisTetris",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "cfenv": "1.0.x",
+    "express": "4.13.x"
+  },
+  "repository": {},
+  "engines": {
+    "node": "4.2.x"
+  }
 }
