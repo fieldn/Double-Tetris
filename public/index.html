@@ -14,7 +14,6 @@
 		<link href="styles/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
 		<link href="styles/bootstrap-3.3.6-dist/css/bootstrap-theme.min.css" rel="stylesheet">
 	</head>
-
 	<body>
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
@@ -58,5 +57,47 @@
 			</div>
 		</div>
 	</body>
+	<table align="center">
+		<tr>
+			<button class="play-button" align = "center" value="Play now!">test value</button>
+			<div align="center" class="game" id="tetris-demo" style="width:200px; height:400px;"></div>
+		</tr>
+	</table>
+	
+	<script src="./blockrain/jquery-1.11.1.min.js"></script>
+	<script src="./blockrain/blockrain.jquery.libs.js"></script>
+	<script src="./blockrain/blockrain.jquery.src.js"></script>
+	<script src="./blockrain/blockrain.jquery.themes.js"></script>
+
+	
+	<script>
+	
+	
+	
+	var $game = $('.game').blockrain({
+    speed: 20,
+    theme: 'vim',
+    onStart: function() {
+		//TODO get new clump from last game
+		$('.play-button').hide();
+		$('html, body').animate({
+			scrollTop: $('.game').offset().top
+		}, 'slow');
+    },
+    onLine: function() {
+		//TODO update the last 3 options placed
+    },
+    onGameOver: function(score){
+		//TODO send final statistics and stuff to server
+		$('.play-button').show();
+    }
+    });
+	
+	$('.play-button').click(function(event){
+        event.preventDefault();
+
+		$('.game').blockrain('start');
+	});
+	</script>
 
 </html>
