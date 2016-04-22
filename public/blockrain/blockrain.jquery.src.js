@@ -6,8 +6,9 @@
 
     options: {
       autoplay: false, // Let a bot play the game
+	  getFromServer: false,
       autoplayRestart: true, // Restart the game automatically once a bot loses
-      showFieldOnStart: true, // Show a bunch of random blocks on the start screen (it looks nice)
+      showFieldOnStart: false, // Show a bunch of random blocks on the start screen (it looks nice)
       theme: null, // The theme name or a theme object
       blockWidth: 30, // How many blocks wide the field is (The standard is 10 blocks)
       autoBlockWidth: false, // The blockWidth is dinamically calculated based on the autoBlockSize. Disabled blockWidth. Useful for responsive backgrounds
@@ -49,6 +50,7 @@
     },
 
     gameover: function() {
+	  var array = this.getArrayFromBoard();
       this.showGameOverMessage();
       this._board.gameover = true;
       this.options.onGameOver.call(this.element, this._filled.score);
@@ -57,13 +59,38 @@
     _doStart: function() {
       this._filled.clearAll();
       this._filled._resetScore();
+	  //TODO get starter array from server
+	  //var value = 6;
+	  //console.log(this.getFromServer) //it is undefined, why
+	  if (this.options.getFromServer) {
+	  var starterArray =
+/* 0,0 here*/ 
+[
+[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+[3   ,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+[3   ,3   ,null,null,null,null,null,null,null,null,null,null,null,null,null],
+[3   ,3   ,null,null,null,null,null,null,null,null,null,null,null,null,null],
+[3   ,3   ,null,null,null,null,null,null,null,null,null,null,null,null,null],
+[3   ,3   ,6   ,6   ,6   ,6   ,6   ,null,null,null,null,null,null,null,null],
+[4   ,4   ,6   ,6   ,6   ,6   ,6   ,null,null,null,null,null,null,null,null],
+[null,4   ,null,null,null,null,null,null,null,null,null,null,null,null,null],
+[3   ,3   ,null,null,null,null,null,null,null,null,null,null,null,null,null],
+[3   ,3   ,null,null,null,null,null,null,null,null,null,null,null,null,null],
+[3   ,3   ,null,null,null,null,null,null,null,null,null,null,null,null,null],
+[3   ,null,null,null,null,null,null,null,null,null,null,null,null,null,null]
+]
+//zomg what a value
+//var starterArray = [[null],[null],[null],[null],[null, null, null, value]];		
+	  this._createBoardFromArray(starterArray);
+	  }
       this._board.cur = this._board.nextShape();
-      this._board.started = true;
+	  //console.log(this.started);
+      this.started = true;
+	  //console.log(this.started);
       this._board.gameover = false;
       this._board.dropDelay = 5;
       this._board.render(true);
       this._board.animate();
-
       this._$start.fadeOut(150);
       this._$gameover.fadeOut(150);
       this._$score.fadeIn(150);
@@ -83,7 +110,7 @@
 
       // On autoplay, start the game right away
       this.options.autoplay = enable;
-      if( enable && ! this._board.started ) {
+      if( enable && ! this.started ) {
         this._doStart();
       }
       this._setupControls( ! enable );
@@ -119,7 +146,36 @@
     showGameOverMessage: function() {
       //this._$gameover.show();
     },
-	
+	/** Creates a board from a 2d array of items
+		 *  This array will be a hash, containing the values
+		 *  array[n][m] is the  color of the block at n, m
+		 *  If the color is null, then there is no item at that point
+		 *  The array will be 12x15
+		 */
+	_createBoardFromArray: function(array) {
+		var array;
+		//console.log("Please see this");
+		var i, j, ilen=array.length, jlen=0;
+        var  blockTypes = Object.keys(this._shapeFactory);
+		for (i=0; i<ilen; i++) {
+
+			jlen = array[i].length;
+			for (j=0; j<jlen; j++) {
+				if (array[i][j] != null) {
+					var blockType = blockTypes[array[i][j]];
+					var blockVariation = 0;
+					var blockOrientation = 0;
+					console.log("Adding at " + i + " " + j + " " + blockType + " " + blockVariation + " " + blockOrientation);
+        			//add: function(x, y, blockType, blockVariation, blockIndex, blockOrientation) {
+					this._filled.add(i, this._BLOCK_HEIGHT - j - 1, blockType, blockVariation, null, blockOrientation);
+					
+				}
+				//console.log("Loop");
+			}
+		}
+		
+        this._board.render(true);
+	},
     /**
      * Update the sizes of the renderer (this makes the game responsive)
      */
@@ -141,12 +197,12 @@
 		$('.game').width(factor);
 		$('.game').height(factor * 1.2);
 
-      this._BLOCK_WIDTH = 25;//this.options.blockWidth;
+      this._BLOCK_WIDTH =12;//this.options.blockWidth;
       //this._BLOCK_HEIGHT = Math.floor(this.element.innerHeight() / this.element.innerWidth() * this._BLOCK_WIDTH);
-	  this._BLOCK_HEIGHT = 30;//Math.floor(height / width * this._BLOCK_WIDTH);
+	  this._BLOCK_HEIGHT = 15;//Math.floor(height / width * this._BLOCK_WIDTH);
 	  
       this._block_size = Math.floor(this._PIXEL_WIDTH / this._BLOCK_WIDTH);
-      this._border_width = 2;
+		this._border_width = 2;
 
       // Recalculate the pixel width and height so the canvas always has the best possible size
       this._PIXEL_WIDTH = this._block_size * this._BLOCK_WIDTH;
@@ -562,6 +618,7 @@
         add: function(x, y, blockType, blockVariation, blockIndex, blockOrientation) {
           if (x >= 0 && x < game._BLOCK_WIDTH && y >= 0 && y < game._BLOCK_HEIGHT) {
             this.data[this.asIndex(x, y)] = {
+
               blockType: blockType, 
               blockVariation: blockVariation, 
               blockIndex: blockIndex, 
@@ -670,13 +727,48 @@
       };
 
     },
+	getArrayFromBoard: function() { //TODO finish
+		var array = [];			
+		var i, j, ilen=this._BLOCK_WIDTH, jlen=0;
+	    var keys = Object.keys(this._shapeFactory);
+		var string = "[";
+		for (i=0; i<ilen; i++) {
+			string+="[";
+			var subArray = [];
+			jlen = this._BLOCK_HEIGHT;
+			for (j=jlen-1; j>=0; j--) {
+				var type = this._filled.check(i,j);
+				if (type != undefined) {
+					for (var k = 0; k < keys.length; k++) {
+						if (keys[k] === type.blockType) {
+							//parsing to get an integer value from the string value		
+							string+= (k + ",");	
+							console.log(k);		
+							subArray.push(k);
+							break;						
+						}
+					}
 
+					
+				} else {
+					string+="null,"
+				}
+				
+			}
+			string+="],";
+			array.push(subArray);
+		}
+		string+="]";
+		console.log(string);
+		return array;
+		
+	},
 
     _SetupBoard: function() {
 
       var game = this;
       var info = this._info;
-
+	  this.started = false;
       this._board = {
         // This sets the tick rate for the game
         animateDelay: 1000 / game.options.speed,
@@ -696,7 +788,7 @@
 
         started: false,
         gameover: false,
-
+		
         renderChanged: true,
 
         init: function() {
@@ -867,7 +959,7 @@
           }
 
         },
-
+		
         createRandomBoard: function() {
 
           var start = [], blockTypes = [], i, ilen, j, jlen, blockType;
@@ -1221,6 +1313,8 @@
         game.start();
       });
 
+
+
       // Create the game over menu
       game._$gameover = $(
         '<div class="blockrain-game-over-holder" style="position:absolute;">'+
@@ -1405,6 +1499,7 @@
 
       var moveLeft = function(start) {
         if( ! start ) { game._board.holding.left = null; return; }
+		if(!game.started) return;
         if( ! game._board.holding.left ) {
           game._board.cur.moveLeft(); 
           game._board.holding.left = Date.now();
@@ -1413,6 +1508,7 @@
       }
       var moveRight = function(start) {
         if( ! start ) { game._board.holding.right = null; return; }
+		if(!game.started) return;
         if( ! game._board.holding.right ) {
           game._board.cur.moveRight(); 
           game._board.holding.right = Date.now(); 
@@ -1421,7 +1517,8 @@
       }
       var drop = function(start) {
         if( ! start ) { game._board.holding.drop = null; return; }
-        if( ! game._board.holding.drop ) {
+        if(!game.started) return;
+		if( ! game._board.holding.drop ) {
           game._board.cur.drop(); 
           game._board.holding.drop = Date.now();
         }
@@ -1435,8 +1532,11 @@
 
       // Handlers: These are used to be able to bind/unbind controls
       var handleKeyDown = function(evt) {
+		  ////////console.log(game.started);
         if( ! game._board.cur ) { return true; }
+		if(!game.started) return;
         var caught = false;
+		if (game._board.paused) return;
 
         caught = true;
         if (game.options.asdwKeys) {
@@ -1464,8 +1564,14 @@
       var handleKeyUp = function(evt) {
         if( ! game._board.cur ) { return true; }
         var caught = false;
-
+		if(!game.started) return;
         caught = true;
+		switch(evt.keyCode) {
+			case 80: 
+			case 27: if(!game._board.paused) game._board.paused = true;
+					 else game._board.paused = false;
+		}
+		if (game._board.paused) return;
         if (game.options.asdwKeys) {
           switch(evt.keyCode) {
             case 65: /*a*/    moveLeft(false); break;
