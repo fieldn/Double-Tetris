@@ -6,7 +6,6 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "bootstrap": "^3.3.6",
     "cfenv": "1.0.x",
     "express": "4.13.x"
   },
