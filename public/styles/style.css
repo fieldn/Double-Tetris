@@ -84,7 +84,10 @@ pre {
 	margin: 0 auto;
 }
 
-.play-button {
+.play_button {
 	margin: 0 auto;
-	
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	color: #ffffff;
+	position: relative;
+	bottom: 0;
 }
