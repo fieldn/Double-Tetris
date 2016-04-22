@@ -1,13 +1,14 @@
 {
   "name": "TetrisTetris",
   "version": "0.0.1",
-  "private": true,
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
     "cfenv": "1.0.x",
-    "express": "4.13.x"
+    "express": "4.13.x",
+    "grunt": "^1.0.1",
+    "ibm_db": "0.0.x"
   },
   "repository": {},
   "engines": {
