@@ -1,5 +1,5 @@
 document.write(
-"	<nav class='navbar navbar-default'>" +
+"	<nav class='navbar navbar-default navbar-inverse navbar-fixed-top'>" +
 "		<div class='container-fluid'>" +
 "			<!-- Brand and toggle get grouped for better mobile display -->" +
 "			<div class='navbar-header'>" +
