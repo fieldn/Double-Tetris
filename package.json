@@ -1,5 +1,5 @@
 {
-	"name": "NodejsStarterApp",
+	"name": "TetrisTetris",
 	"version": "0.0.1",
     "private": true,
 	"scripts": {
@@ -7,7 +7,8 @@
 	},
 	"dependencies": {
 		"express": "4.13.x",
-		"cfenv": "1.0.x"
+		"cfenv": "1.0.x",
+		"bootstrap": "3.3.6"
 	},
 	"repository": {},
 	"engines": {

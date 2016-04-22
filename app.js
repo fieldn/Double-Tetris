@@ -12,6 +12,8 @@ var express = require('express');
 // for more info, see: https://www.npmjs.com/package/cfenv
 var cfenv = require('cfenv');
 
+var bs = require('bootstrap');
+
 // create a new express server
 var app = express();
 
