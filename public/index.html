@@ -17,10 +17,53 @@
         <td>
             <h1>TetrisTetris</h1>
           <p>Welcome to Double Tetris, a haven for all tetris lovers! We have a multitude of different game styles, including 
-	  <span class = "blue"><a href = "collaborative">Collaborative Mode</a></span>, <span class = "blue"><a href = "versus">Versus Mode</a></span>, and <span class = "blue"><a href = "enemy">Your Own Worst Enemy Mode</a></span>!!
-	  <p>If you haven't created an account already, please do so, through Facebook or Google below, or sign in to start playing!
-	  <p><a href = "https://www.ng.bluemix.net/docs/#runtimes/nodejs/index.html">documentation</a>
+			<span class = "blue"><a href = "collaborative">Collaborative Mode</a></span>, <span class = "blue"><a href = "versus">Versus Mode</a></span>, and <span class = "blue"><a href = "enemy">Your Own Worst Enemy Mode</a></span>!!
+		  <p>If you haven't created an account already, please do so, through Facebook or Google below, or sign in to start playing!
+	      <p><a href = "https://www.ng.bluemix.net/docs/#runtimes/nodejs/index.html">documentation</a>
+	  </tr>
     </table>
+	<table align="center">
+		<tr>
+			<button class="play-button" align = "center" value="Play now!">test value</button>
+			<div align="center" class="game" id="tetris-demo" style="width:200px; height:400px;"></div>
+		</tr>
+	</table>
+	
+	<script src="./blockrain/jquery-1.11.1.min.js"></script>
+	<script src="./blockrain/blockrain.jquery.libs.js"></script>
+	<script src="./blockrain/blockrain.jquery.src.js"></script>
+	<script src="./blockrain/blockrain.jquery.themes.js"></script>
+
+	
+	<script>
+	
+	
+	
+	var $game = $('.game').blockrain({
+    speed: 20,
+    theme: 'vim',
+    onStart: function() {
+		//TODO get new clump from last game
+		$('.play-button').hide();
+		$('html, body').animate({
+			scrollTop: $('.game').offset().top
+		}, 'slow');
+    },
+    onLine: function() {
+		//TODO update the last 3 options placed
+    },
+    onGameOver: function(score){
+		//TODO send final statistics and stuff to server
+		$('.play-button').show();
+    }
+    });
+	
+	$('.play-button').click(function(event){
+        event.preventDefault();
+
+		$('.game').blockrain('start');
+	});
+	</script>
   </body>
 
 </html>
