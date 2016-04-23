@@ -16,6 +16,7 @@
       difficulty: 'normal', // Difficulty (normal|nice|evil).
       speed: 20, // The speed of the game. The higher, the faster the pieces go.
       asdwKeys: true, // Enable ASDW keys
+	  IsDouble: false, //Allows us to ignore key input so one controls can control both games
 
       // Copy
       playText: 'Let\'s play some Tetris',
@@ -182,7 +183,7 @@
 
 			jlen = array[i].length;
 			for (j=0; j<jlen; j++) {
-				if (array[i][j] != null) {
+				if (array[i][j] != null && array[i][j] != -1) {
 					var blockType = blockTypes[array[i][j]];
 					var blockVariation = 0;
 					var blockOrientation = 0;
@@ -768,10 +769,12 @@
 							subArray.push(k);
 							break;						
 						}
-					}
+					} 
+					
 
 					
 				} else {
+					subArray.push(null); //no blocks here
 					console.log("nulling string");
 					string+="null,"
 				}
@@ -1660,12 +1663,14 @@
       function getKey(evt) { return 'safekeypress.' + evt.keyCode; }
 
       function keydown(evt) {
+		
         var key = getKey(evt);
         $.data(this, key, ($.data(this, key) || 0) - 1);
         return handleKeyDown.call(this, evt);
       }
 
       function keyup(evt) {
+		
         $.data(this, getKey(evt), 0);
         handleKeyUp.call(this, evt);
         return isStopKey(evt);
@@ -1673,9 +1678,10 @@
 
       // Unbind everything by default
       // Use event namespacing so we don't ruin other keypress events
-      $(document) .unbind('keydown.blockrain')
+      if (!game.options.IsDouble) {
+		  $(document) .unbind('keydown.blockrain')
                   .unbind('keyup.blockrain');
-
+	  }
       if( ! game.options.autoplay ) {
         if( enable ) {
           $(document) .bind('keydown.blockrain', keydown)

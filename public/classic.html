@@ -14,19 +14,19 @@
 	</head>
 	<body>
 		<script type="text/javascript" src="includes/navbar.js"></script>
-
-		<div class="container">
-			<h1 class="text-center">Classic</h1>
-			<div class="center-block" align="center" style="margin-top: 50px">
-				<table align="center">
-					<tr>
-						<input type = "button" class="play_button" align="center" value="Play now!" style="width:100px; height:40px; margin-bottom: 30px"/>
-					</tr>
-				</table>
-				<div align="center" class="game" id="tetris-demo" style="width:200px; height:400px;"></div>
+		<div class = "container">
+			<div class="jumbotron">
+				<h1 class="text-center">Classic</h1>
+				<div class="center-block" align="center" style="margin-top: 50px">
+					<table align="center">
+						<tr>
+							<input type = "button" class="play_button" align="center" value="Play now!" style="width:100px; height:40px; margin-bottom: 30px"/>
+						</tr>
+					</table>
+					<div align="center" class="game" id="tetris-demo" style="width:200px; height:400px;"></div>
+				</div>
 			</div>
 		</div>
-
 		<script src="./blockrain/jquery-1.11.1.min.js"></script>
 		<script src="./blockrain/blockrain.jquery.libs.js"></script>
 		<script src="./blockrain/blockrain.jquery.src.js"></script>
@@ -39,7 +39,7 @@
 				onStart: function() {
 					$('.play_button').hide();
 					$('html, body').animate({
-						scrollTop: $('.game').offset().top
+						scrollTop: $('.game').offset().top - 55
 					}, 'slow');
 					
 				},

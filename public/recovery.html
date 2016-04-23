@@ -13,18 +13,21 @@
 	</head>
 	<body>
 		<script type="text/javascript" src="includes/navbar.js"></script>
-
-		<div class="container">
-			<h1 class="text-center">Recovery</h1>
+		<div class = "container">
+			<div class="jumbotron">
+				<h1 class="text-center">Recovery</h1>
+				<div class="center-block" align="center" style="margin-top: 50px">
+					<table align="center">
+						<tr>
+							<div id = "play_button">
+								<input type = "button" class="play_button" align="center" value="Play now!" style="width:100px; height:40px; margin-bottom: 30px"/>
+							</div>
+						</tr>
+					</table>
+					<div align="center" class="game" id="tetris-demo" style="width:200px; height:400px;"></div>
+				</div>
+			</div>
 		</div>
-		
-			<div class="center-block" align="center">
-				<table align="center">
-					<tr>
-						<input type = "button" class="play_button" align="center" value="Play now!" style="width:100px; height:30px;"/>
-						<div align="center" class="game" id="tetris-demo" style="width:200px; height:400px;"></div>
-					</tr>
-				</table>
 
 				<script src="./blockrain/jquery-1.11.1.min.js"></script>
 				<script src="./blockrain/blockrain.jquery.libs.js"></script>
@@ -38,7 +41,7 @@ var $game = $('.game').blockrain({
 	onStart: function() {
 		$('.play_button').hide();
 		$('html, body').animate({
-			scrollTop: $('.game').offset().top
+			scrollTop: $('.game').offset().top - 55
 		}, 'slow');
 		
 	},
@@ -48,11 +51,11 @@ var $game = $('.game').blockrain({
 	onGameOver: function(score){
 		//TODO send final statistics and stuff to server
 		$('.play_button').show();
-		$('.play_button').innerHTML = "Play again!";
+		$('.play_button').text = "Play again!";
 		
 		
 		//save board on server?
-		var game = $('.game').blockrain('getBoard');		
+		var game = $('.game').blockrain('getArrayFromBoard');		
 		console.log(game);
 		
 		var data = { 'game': game };
