@@ -49,6 +49,26 @@ var $game = $('.game').blockrain({
 		//TODO send final statistics and stuff to server
 		$('.play_button').show();
 		$('.play_button').innerHTML = "Play again!";
+		
+		
+		//save board on server?
+		var game = $('.game').blockrain('getBoard');		
+		console.log(game);
+		
+		var data = { 'game': game };
+		
+		$.ajax({
+					type: 'POST',
+					data: data,
+					dataType: 'json',
+					contentType: "application/x-www-form-urlencoded",
+					url: 'http://localhost:6002/recovery/board',
+					success: function(data) {
+						console.log(data);
+					}
+			   }
+		);
+		
 	}
 });
 

@@ -40,6 +40,8 @@
      * Start/Restart Game
      */
     start: function() {
+	  console.log("this is: ");
+	  console.log(this);
       this._doStart();
       this.options.onStart.call(this.element);
     },
@@ -55,7 +57,9 @@
       this._board.gameover = true;
       this.options.onGameOver.call(this.element, this._filled.score);
     },
-
+	getboard: function() {
+		return this._board;
+	},
     _doStart: function() {
       this._filled.clearAll();
       this._filled._resetScore();
@@ -63,8 +67,8 @@
 	  //var value = 6;
 	  //console.log(this.getFromServer) //it is undefined, why
 	  if (this.options.getFromServer) {
-	  var starterArray =
-/* 0,0 here*/ 
+/*	  var starterArray =
+// 0,0 here
 [
 [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
 [3   ,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
@@ -78,6 +82,23 @@
 [3   ,3   ,null,null,null,null,null,null,null,null,null,null,null,null,null],
 [3   ,3   ,null,null,null,null,null,null,null,null,null,null,null,null,null],
 [3   ,null,null,null,null,null,null,null,null,null,null,null,null,null,null]
+]*/
+	  var starterArray =
+[ /* 2 = 'T' piece */ /* 0 = 'I' piece */ /* 1 = '[]' piece */
+  /* 3 = backwards 'L' piece */ /* 4 = 'L' piece */
+  /* 5 = 'Z' piece */ /* 6 = backwards 'Z' piece */
+[null,null,null,1,1,0,null,null,null,null,null,null,null,null,null],
+[null,2,null,1,1,0,null,null,null,null,null,null,null,null,null],
+[2,2,null,null,null,0,null,null,null,null,null,null,null,null,null],
+[null,2,null,null,null,0,null,null,null,null,null,null,null,null,null],
+[null,null,null,4,null,null,null,null,null,null,null,null,null,null,null],
+[5,5,null,4,null,null,null,null,null,null,null,null,null,null,null],
+[null,5,5,4,4,null,null,null,null,null,null,null,null,null,null],
+[null,null,3,null,null,null,null,null,null,null,null,null,null,null,null],
+[null,null,3,null,null,null,null,null,null,null,null,null,null,null,null],
+[null,3,3,null,null,null,null,null,null,null,null,null,null,null,null],
+[null,6,6,null,null,null,null,null,null,null,null,null,null,null,null],
+[6,6,null,null,null,null,null,null,null,null,null,null,null,null,null]
 ]
 //zomg what a value
 //var starterArray = [[null],[null],[null],[null],[null, null, null, value]];		
@@ -165,7 +186,7 @@
 					var blockType = blockTypes[array[i][j]];
 					var blockVariation = 0;
 					var blockOrientation = 0;
-					console.log("Adding at " + i + " " + j + " " + blockType + " " + blockVariation + " " + blockOrientation);
+					//console.log("Adding at " + i + " " + j + " " + blockType + " " + blockVariation + " " + blockOrientation);
         			//add: function(x, y, blockType, blockVariation, blockIndex, blockOrientation) {
 					this._filled.add(i, this._BLOCK_HEIGHT - j - 1, blockType, blockVariation, null, blockOrientation);
 					
@@ -751,6 +772,7 @@
 
 					
 				} else {
+					console.log("nulling string");
 					string+="null,"
 				}
 				
@@ -759,8 +781,44 @@
 			array.push(subArray);
 		}
 		string+="]";
-		console.log(string);
+		//console.log(string);
 		return array;
+		
+	},
+	getBoard : function() {
+		var array = [];			
+		var i, j, ilen=this._BLOCK_WIDTH, jlen=0;
+	    var keys = Object.keys(this._shapeFactory);
+		var string = "[";
+		for (i=0; i<ilen; i++) {
+			string+="[";
+			var subArray = [];
+			jlen = this._BLOCK_HEIGHT;
+			for (j=jlen-1; j>=0; j--) {
+				var type = this._filled.check(i,j);
+				if (type != undefined) {
+					for (var k = 0; k < keys.length; k++) {
+						if (keys[k] === type.blockType) {
+							//parsing to get an integer value from the string value		
+							string+= (k + ",");	
+							console.log(k);		
+							subArray.push(k);
+							break;						
+						}
+					}
+
+					
+				} else {
+					string+="null,"
+				}
+				
+			}
+			string+="],";
+			array.push(subArray);
+		}
+		string+="]";
+		//console.log(string);
+		return string;
 		
 	},
 
