@@ -35,14 +35,12 @@
       // When a line is made. Returns the number of lines, score assigned and total score
       onLine: function(lines, scoreIncrement, score){}
     },
-
+    boardToSet : [],
 
     /**
      * Start/Restart Game
      */
     start: function() {
-	  console.log("this is: ");
-	  console.log(this);
       this._doStart();
       this.options.onStart.call(this.element);
     },
@@ -57,6 +55,11 @@
       this.showGameOverMessage();
       this._board.gameover = true;
       this.options.onGameOver.call(this.element, this._filled.score);
+    },
+    createBoard: function() {
+	console.log("data is: ");
+	var board = $('.game').blockrain.boardToSet;
+	this._createBoardFromArray(board);
     },
 	getboard: function() {
 		return this._board;
@@ -103,7 +106,7 @@
 ]
 //zomg what a value
 //var starterArray = [[null],[null],[null],[null],[null, null, null, value]];		
-	  this._createBoardFromArray(starterArray);
+	  //this._createBoardFromArray(starterArray);
 	  }
       this._board.cur = this._board.nextShape();
 	  //console.log(this.started);
@@ -765,7 +768,7 @@
 						if (keys[k] === type.blockType) {
 							//parsing to get an integer value from the string value		
 							string+= (k + ",");	
-							console.log(k);		
+							//console.log(k);		
 							subArray.push(k);
 							break;						
 						}
@@ -774,8 +777,8 @@
 
 					
 				} else {
-					subArray.push(null); //no blocks here
-					console.log("nulling string");
+					subArray.push(-1); //no blocks here
+					//console.log("nulling string");
 					string+="null,"
 				}
 				
@@ -804,7 +807,7 @@
 						if (keys[k] === type.blockType) {
 							//parsing to get an integer value from the string value		
 							string+= (k + ",");	
-							console.log(k);		
+							//console.log(k);		
 							subArray.push(k);
 							break;						
 						}
