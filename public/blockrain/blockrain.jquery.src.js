@@ -150,9 +150,9 @@
       this._board.animate();
 	  this.gameWasSetOver = false;
 
-      this._$start.fadeOut(150);
+      //this._$start.fadeOut(150);
       //this._$gameover.fadeOut(150);
-      this._$score.fadeIn(150);
+      //this._$score.fadeIn(150);
     },
 
 
@@ -193,7 +193,7 @@
 		console.log("score after addition: " + newScore);
 
         this._filled.score = parseInt(newScore);
-        this._$scoreText.text(this._filled_score);
+        //this._$scoreText.text(this._filled_score);
       }
       return this._filled.score;
     },
@@ -745,20 +745,23 @@
           var scores = [0,400,1000,3000,12000];
           if( numLines >= scores.length ){ numLines = scores.length-1 }
 
-          this.score += scores[numLines];
+          //this.score += scores[numLines];
 		  var scoreToAdd = scores[numLines];
 		
 		  console.log("score before add: " + scoreToAdd);
-		  console.log("current score: " + game._$scoreText.text());
-		  scoreToAdd += parseInt(game._$scoreText.text());
+		  game._$scoreText = $('.blockrain-score-num');
+		  var currentScore = parseInt(game._$scoreText.text());
+		  console.log("current score: " + currentScore);
+		  scoreToAdd += currentScore;
 		  console.log("score after add: " + scoreToAdd);
           game._$scoreText.text(scoreToAdd);
+		  //$('.blockrain-score-num').text(scoreToAdd);
 		  this.score = scoreToAdd;
-		$('.blockrain-score-num').text(this.score);
-
           game.options.onLine.call(game.element, numLines, scores[numLines], this.score);
         },
         _resetScore: function() {
+		  game._$scoreText = $('.blockrain-score-num');
+
           this.score = 0;
           game._$scoreText.text(this.score);
         },
@@ -1399,34 +1402,34 @@
       var game = this;
 
       // Score
-      game._$score = $(
+      /*game._$score = $(
         '<div class="blockrain-score-holder" style="position:absolute;">'+
           '<div class="blockrain-score">'+
             '<div class="blockrain-score-msg">'+ this.options.scoreText +'</div>'+
             '<div class="blockrain-score-num">0</div>'+
 			'<div class="blockrain-game-over"><br><br>Game<br>Over</div>'+
           '</div>'+
-        '</div>').hide();
-      game._$scoreText = game._$score.find('.blockrain-score-num');
+        '</div>').hide();*/
+      //game._$scoreText = [0];
 	  //game._$gameover = game._$score.find('.blockrain-game-over');
 	  //game._$gameover.hide();
 	
       //game._$gameholder.append(game._$score);
 
       // Create the start menu
-      game._$start = $(
+      /*game._$start = $(
         '<div class="blockrain-start-holder" style="position:absolute;">'+
           '<div class="blockrain-start">'+
             '<div class="blockrain-start-msg">'+ this.options.playText +'</div>'+
             '<a class="blockrain-btn blockrain-start-btn">'+ this.options.playButtonText +'</a>'+
           '</div>'+
-        '</div>').hide();
+        '</div>').hide();*/
       //game._$gameholder.append(game._$start);
 
-      game._$start.find('.blockrain-start-btn').click(function(event){
+      /*game._$start.find('.blockrain-start-btn').click(function(event){
         event.preventDefault();
         game.start();
-      });
+      });*/
 
 
 
