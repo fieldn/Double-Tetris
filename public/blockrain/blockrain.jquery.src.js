@@ -51,6 +51,7 @@
 
 		this._ctx.font = oldFont;
 	},
+    boardToSet : [],
 
     /**
      * Start/Restart Game
@@ -86,6 +87,11 @@
 			  this.options.onGameOver.call(this.element, this._filled.score);
 		  }
 	  
+    },
+    createBoard: function() {
+	console.log("data is: ");
+	var board = $('.game').blockrain.boardToSet;
+	this._createBoardFromArray(board);
     },
 	getboard: function() {
 		return this._board;
@@ -132,7 +138,7 @@
 ]
 //zomg what a value
 //var starterArray = [[null],[null],[null],[null],[null, null, null, value]];		
-	  this._createBoardFromArray(starterArray);
+	  //this._createBoardFromArray(starterArray);
 	  }
       this._board.cur = this._board.nextShape();
 	  //console.log(this.started);
@@ -808,7 +814,7 @@
 					for (var k = 0; k < keys.length; k++) {
 						if (keys[k] === type.blockType) {
 							//parsing to get an integer value from the string value		
-							//string+= (k + ",");	
+							string+= (k + ",");	
 							//console.log(k);		
 							subArray.push(k);
 							break;						
@@ -818,7 +824,7 @@
 
 					
 				} else {
-					subArray.push(null); //no blocks here
+					subArray.push(-1); //no blocks here
 					//console.log("nulling string");
 					string+="null,"
 				}
@@ -848,7 +854,7 @@
 						if (keys[k] === type.blockType) {
 							//parsing to get an integer value from the string value		
 							string+= (k + ",");	
-							console.log(k);		
+							//console.log(k);		
 							subArray.push(k);
 							break;						
 						}

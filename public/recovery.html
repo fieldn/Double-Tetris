@@ -63,9 +63,13 @@ var $game = $('.game').blockrain({
         '</div>');
 		$(".blockrain-game-over-holder").hide();
 
-
-
-		
+		$.get("recovery/board", function(data) {
+			console.log("board is " + data.board);
+			board = data.board;
+			$('.game').blockrain.boardToSet = board;
+			console.log($('.game').blockrain.boardToSet);
+			$('.game').blockrain('createBoard');
+		});
 	},
 	onLine: function() {
 		//TODO update the last 3 options placed
@@ -82,19 +86,22 @@ var $game = $('.game').blockrain({
 		$('.blockrain-gameover-msg2').text("");*/
 		
 		//save board on server?
-		var game = $('.game').blockrain('getArrayFromBoard');		
-		console.log(game);
-		
-		var data = { 'game': game };
+		var board = $('.game').blockrain('getArrayFromBoard');		
+		//console.log(game);
+		var score = $('.game').blockrain('score');
+		var data = { 'board': board, 'score': score };
 		
 		$.ajax({
 					type: 'POST',
 					data: data,
 					dataType: 'json',
 					contentType: "application/x-www-form-urlencoded",
-					url: 'http://localhost:6002/recovery/board',
+					url: 'http://localhost:6001/recovery/board',
 					success: function(data) {
 						console.log(data);
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						console.log("error sending post");
 					}
 			   }
 		);
