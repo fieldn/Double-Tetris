@@ -17,11 +17,12 @@
       speed: 20, // The speed of the game. The higher, the faster the pieces go.
       asdwKeys: true, // Enable ASDW keys
 	  IsDouble: false, //Allows us to ignore key input so one controls can control both games
-
+	  gameWasSetOver: false,
+	  gamewasStarted: false,
       // Copy
       playText: 'Let\'s play some Tetris',
       playButtonText: 'Play',
-      gameOverText: 'Game Over',
+      gameOverText: '<br><br>Game<br>Over',
       restartButtonText: 'Play Again',
       scoreText: 'Score',
 
@@ -35,28 +36,56 @@
       // When a line is made. Returns the number of lines, score assigned and total score
       onLine: function(lines, scoreIncrement, score){}
     },
+	printGameOver : function() {
+		console.log('context is: ' + this._ctx);
+		var width = $('.game').width();
+		var height = $('.game').height();
+		
+		var oldFont = this._ctx.font;
+		
+		this._ctx.font = "30px Arial";
+		this._ctx.strokeText("Game Over", width/2, height/2);
 
+		console.log(width + + height);
+
+
+		this._ctx.font = oldFont;
+	},
 
     /**
      * Start/Restart Game
      */
     start: function() {
-	  console.log("this is: ");
-	  console.log(this);
       this._doStart();
-      this.options.onStart.call(this.element);
+	  if (!this.gameWasStarted) {
+		this.options.onStart.call(this.element);
+	  }
+	  this.gameWasStarted = true;
+	
     },
 
     restart: function() {
       this._doStart();
-      this.options.onRestart.call(this.element);
+	  if (!this.gameWasStarted) {
+		this.options.onRestart.call(this.element);
+	  }
+	  this.gameWasStarted = true;
+
     },
 
     gameover: function() {
-	  var array = this.getArrayFromBoard();
-      this.showGameOverMessage();
-      this._board.gameover = true;
-      this.options.onGameOver.call(this.element, this._filled.score);
+
+		  if (!this.gameWasSetOver) {
+			  this.gameWasStarted = false;
+			  this.gameWasSetOver = true;
+			  var array = this.getArrayFromBoard();
+			  this.showGameOverMessage();
+			  this._board.gameover = true;
+			  //this._$gameover.text(this.gameOverText);
+			  //console.log(this._$gameover.text);
+			  this.options.onGameOver.call(this.element, this._filled.score);
+		  }
+	  
     },
 	getboard: function() {
 		return this._board;
@@ -86,19 +115,19 @@
 ]*/
 	  var starterArray =
 [ /* 2 = 'T' piece */ /* 0 = 'I' piece */ /* 1 = '[]' piece */
-  /* 3 = backwards 'L' piece */ /* 4 = 'L' piece */
+  /* 3 = backwards 'L' pliece */ /* 4 = 'L' piece */
   /* 5 = 'Z' piece */ /* 6 = backwards 'Z' piece */
-[null,null,null,1,1,0,null,null,null,null,null,null,null,null,null],
-[null,2,null,1,1,0,null,null,null,null,null,null,null,null,null],
-[2,2,null,null,null,0,null,null,null,null,null,null,null,null,null],
-[null,2,null,null,null,0,null,null,null,null,null,null,null,null,null],
-[null,null,null,4,null,null,null,null,null,null,null,null,null,null,null],
-[5,5,null,4,null,null,null,null,null,null,null,null,null,null,null],
-[null,5,5,4,4,null,null,null,null,null,null,null,null,null,null],
-[null,null,3,null,null,null,null,null,null,null,null,null,null,null,null],
-[null,null,3,null,null,null,null,null,null,null,null,null,null,null,null],
-[null,3,3,null,null,null,null,null,null,null,null,null,null,null,null],
-[null,6,6,null,null,null,null,null,null,null,null,null,null,null,null],
+[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+[1,2,null,null,null,null,null,null,null,null,null,null,null,null,null],
+[2,2,null,null,null,null,null,null,null,null,null,null,null,null,null],
+[1,2,null,null,null,null,null,null,null,null,null,null,null,null,null],
+[1,2,null,null,null,null,null,null,null,null,null,null,null,null,null],
+[5,5,null,null,null,null,null,null,null,null,null,null,null,null,null],
+[1,5,5,null,null,null,null,null,null,null,null,null,null,null,null],
+[1,2,3,null,null,null,null,null,null,null,null,null,null,null,null],
+[1,2,3,null,null,null,null,null,null,null,null,null,null,null,null],
+[1,3,3,null,null,null,null,null,null,null,null,null,null,null,null],
+[1,6,6,null,null,null,null,null,null,null,null,null,null,null,null],
 [6,6,null,null,null,null,null,null,null,null,null,null,null,null,null]
 ]
 //zomg what a value
@@ -113,8 +142,10 @@
       this._board.dropDelay = 5;
       this._board.render(true);
       this._board.animate();
+	  this.gameWasSetOver = false;
+
       this._$start.fadeOut(150);
-      this._$gameover.fadeOut(150);
+      //this._$gameover.fadeOut(150);
       this._$score.fadeIn(150);
     },
 
@@ -149,8 +180,12 @@
       this._setupTouchControls(enable);
     },
 
-    score: function(newScore) {
+    score: function(newScore) { //newscore is a string
       if( typeof newScore !== 'undefined' && parseInt(newScore) >= 0 ) {
+		console.log("adding: " + newScore);
+		//newScore += parseInt(this._$scoreText.text);
+		console.log("score after addition: " + newScore);
+
         this._filled.score = parseInt(newScore);
         this._$scoreText.text(this._filled_score);
       }
@@ -232,6 +267,7 @@
 
       this._$canvas .attr('width', this._PIXEL_WIDTH)
                     .attr('height', this._PIXEL_HEIGHT);
+	
     },
 
 
@@ -373,7 +409,7 @@
       if( this._theme.backgroundGrid instanceof Image ) {
 
         // Not loaded
-        if( this._theme.backgroundGrid.width === 0 || this._theme.backgroundGrid.height === 0 ){ return; }
+        if(this._theme.backgroundGrid.width === 0 || this._theme.backgroundGrid.height === 0 ){ return; }
 
         this._ctx.globalAlpha = 1.0;
 
@@ -704,7 +740,15 @@
           if( numLines >= scores.length ){ numLines = scores.length-1 }
 
           this.score += scores[numLines];
-          game._$scoreText.text(this.score);
+		  var scoreToAdd = scores[numLines];
+		
+		  console.log("score before add: " + scoreToAdd);
+		  console.log("current score: " + game._$scoreText.text());
+		  scoreToAdd += parseInt(game._$scoreText.text());
+		  console.log("score after add: " + scoreToAdd);
+          game._$scoreText.text(scoreToAdd);
+		  this.score = scoreToAdd;
+		$('.blockrain-score-num').text(this.score);
 
           game.options.onLine.call(game.element, numLines, scores[numLines], this.score);
         },
@@ -764,8 +808,8 @@
 					for (var k = 0; k < keys.length; k++) {
 						if (keys[k] === type.blockType) {
 							//parsing to get an integer value from the string value		
-							string+= (k + ",");	
-							console.log(k);		
+							//string+= (k + ",");	
+							//console.log(k);		
 							subArray.push(k);
 							break;						
 						}
@@ -775,7 +819,7 @@
 					
 				} else {
 					subArray.push(null); //no blocks here
-					console.log("nulling string");
+					//console.log("nulling string");
 					string+="null,"
 				}
 				
@@ -869,7 +913,7 @@
         },
 
         showGameOverMessage: function() {
-          //game._$gameover.show();
+          game._$gameover.show();
         },
 
         nextShape: function(_set_next_only) {
@@ -1354,9 +1398,13 @@
           '<div class="blockrain-score">'+
             '<div class="blockrain-score-msg">'+ this.options.scoreText +'</div>'+
             '<div class="blockrain-score-num">0</div>'+
+			'<div class="blockrain-game-over"><br><br>Game<br>Over</div>'+
           '</div>'+
         '</div>').hide();
       game._$scoreText = game._$score.find('.blockrain-score-num');
+	  //game._$gameover = game._$score.find('.blockrain-game-over');
+	  //game._$gameover.hide();
+	
       //game._$gameholder.append(game._$score);
 
       // Create the start menu
@@ -1367,7 +1415,7 @@
             '<a class="blockrain-btn blockrain-start-btn">'+ this.options.playButtonText +'</a>'+
           '</div>'+
         '</div>').hide();
-      game._$gameholder.append(game._$start);
+      //game._$gameholder.append(game._$start);
 
       game._$start.find('.blockrain-start-btn').click(function(event){
         event.preventDefault();
@@ -1377,18 +1425,18 @@
 
 
       // Create the game over menu
-      game._$gameover = $(
+      /*game._$gameover = $(
         '<div class="blockrain-game-over-holder" style="position:absolute;">'+
           '<div class="blockrain-game-over">'+
             '<div class="blockrain-game-over-msg">'+ this.options.gameOverText +'</div>'+
-            '<a class="blockrain-btn blockrain-game-over-btn">'+ this.options.restartButtonText +'</a>'+
+            //'<a class="blockrain-btn blockrain-game-over-btn">'+ this.options.restartButtonText +'</a>'+
           '</div>'+
-        '</div>').hide();
-      game._$gameover.find('.blockrain-game-over-btn').click(function(event){
+        '</div>').hide();*/
+      /*game._$gameover.find('.blockrain-game-over-btn').click(function(event){
         event.preventDefault();
         game.restart();
       });
-      game._$gameholder.append(game._$gameover);
+      game._$gameholder.append(game._$gameover);*/
 
       this._createControls();
     },

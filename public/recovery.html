@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+	
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,38 +12,59 @@
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="styles/main.css">
 	</head>
+	
 	<body>
 		<script type="text/javascript" src="includes/navbar.js"></script>
 		<div class = "container">
-			<div class="jumbotron">
+			<div class="jumbotron" >
 				<h1 class="text-center">Recovery</h1>
-				<div class="center-block" align="center" style="margin-top: 50px">
+				<div class="center-block" align="center" style="margin-top: 50px; width:70%">
+					<h3 class="text-center">Recovery mode! You will get a board that another user was about to fail with, try to see if you can do better!</h3>
 					<table align="center">
 						<tr>
-							<div id = "play_button">
-								<input type = "button" class="play_button" align="center" value="Play now!" style="width:100px; height:40px; margin-bottom: 30px"/>
-							</div>
+							<input type="button" class="btn-lg btn-primary" id="play_button" align="center" value="Play now!" style="margin-bottom: 30px"/>
+							<input type="button" class="btn-lg btn-primary" id="play_button_again" align="center" value="Play again!" style="margin-bottom: 30px"/>
 						</tr>
+						<div class="jumbotron" id="gameHolder" style="background-color: #000">
+							<div class="game" id="tetris-demo" align="center"></div>
+						</div>
 					</table>
-					<div align="center" class="game" id="tetris-demo" style="width:200px; height:400px;"></div>
 				</div>
 			</div>
 		</div>
-
+				
 				<script src="./blockrain/jquery-1.11.1.min.js"></script>
 				<script src="./blockrain/blockrain.jquery.libs.js"></script>
 				<script src="./blockrain/blockrain.jquery.src.js"></script>
 				<script src="./blockrain/blockrain.jquery.themes.js"></script>
 				<script>
+$(document).ready(function(){
+	$("#play_button_again").hide();
+});
 var $game = $('.game').blockrain({
 	getFromServer: true,
 	speed: 20,
 	theme: 'retro',
 	onStart: function() {
-		$('.play_button').hide();
+		$("#play_button").hide();
+		$("#play_button_again").hide();
 		$('html, body').animate({
 			scrollTop: $('.game').offset().top - 55
 		}, 'slow');
+
+		$('#gameHolder').before( '<h2 div class="blockrain-score-holder2" style="position:absolute; color:#c2ffad;">'+
+          '<div class="blockrain-score" style="position:relative; left:15px; top:60px">'+
+            '<div class="blockrain-score-msg">'+ 'Score' +'</div>'+
+            '<div class="blockrain-score-num">0</div>'+
+          '</div>'+
+        '</div>');
+		$('#gameHolder').after( '<GO div class="blockrain-game-over-holder" style="position:absolute; left: ' + ($('.blockrain-game-holder').offset().left+$('.blockrain-game-holder').width()/2 - 100) + 'px; top: '+($('.game').offset().top+100)+'px;">'+
+          '<img src="images/gameover.png">' + 
+        '</div>');
+		$(".blockrain-game-over-holder").hide();
+
+
+
 		
 	},
 	onLine: function() {
@@ -50,9 +72,14 @@ var $game = $('.game').blockrain({
 	},
 	onGameOver: function(score){
 		//TODO send final statistics and stuff to server
-		$('.play_button').show();
-		$('.play_button').text = "Play again!";
-		
+		$("#play_button_again").show();
+			
+
+		$("#play_button").attr('disabled', true);
+		$("#play_button").hide();
+		$(".blockrain-game-over-holder").show();
+		/*$('.blockrain-gameover-msg').before('<br /> <br />');
+		$('.blockrain-gameover-msg2').text("");*/
 		
 		//save board on server?
 		var game = $('.game').blockrain('getArrayFromBoard');		
@@ -75,11 +102,17 @@ var $game = $('.game').blockrain({
 	}
 });
 
-$('.play_button').click(function(event){
+$('#play_button').click(function(event){
 	event.preventDefault();
 
 	$('.game').blockrain('start');
 });
+$('#play_button_again').click(function(event){
+	event.preventDefault();
+
+	$('.game').blockrain('start');
+});
+
 				</script>
 			</div>
 		</div>
