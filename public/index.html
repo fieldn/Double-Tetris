@@ -12,23 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="styles/main.css">
 	</head>
 	<body>
-		<script>
-			window.fbAsyncInit = function() {
-			    FB.init({
-			    	appId      : '1074584495947824',
-			    	xfbml      : true,
-			    	version    : 'v2.6'
-			    });
-			 };
-
-			(function(d, s, id){
-			    var js, fjs = d.getElementsByTagName(s)[0];
-			    if (d.getElementById(id)) {return;}
-			    js = d.createElement(s); js.id = id;
-			    js.src = "//connect.facebook.net/en_US/sdk.js";
-			    fjs.parentNode.insertBefore(js, fjs);
-			}(document, 'script', 'facebook-jssdk'));
-		</script>
+		<script type="text/javascript" src="includes/loginscript.js"></script>
 		<script type="text/javascript" src="includes/fblogin.js"></script>
 		<script type="text/javascript" src="includes/navbar.js"></script>
 
@@ -43,6 +27,7 @@
 					<span class = "blue"><a href = "recovery.html">Recovery</a></span>, <span class = "blue"><a href = "versus.html">Versus</a></span>, and <span class = "blue"><a href = "enemy.html">Your Own Worst Enemy</a></span>!</p>
 					<p>If you haven't created an account already, please do so, through Facebook or Google below, or sign in to start playing!</p>
 				</div>
+				
 				<div class="row" style="align-content: center">
 					<div class="fb-login-button center-block" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div>
 				</div>

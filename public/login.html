@@ -15,16 +15,24 @@
 		<link rel="stylesheet" type="text/css" href="styles/main.css">
 	</head>
 	<body>
+		<script type-"text/javascript" src="includes/loginscript.js"></script>
 		<script type="text/javascript" src="includes/navbar.js"></script>
 
 		<div class="container">
 			<div class="row"> 
-				<img class="center-block img-responsive" src="images/TetrisTetris.png" style="max-width: 30%">
+				<img class="center-block img-responsive" src="images/th.png" style="max-width: 20%">
 			</div>
 			<div class="main">
 				<h1 class="text-center">Login or Sign Up!</h1>
-				<p>Do stuff here with logging in (OAuth probs)</p>
+				<p class="text-center"> Login or sign up using the facebook button: 
+
+				<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+				</fb:login-button>
+
+				<div id="status"></div>
+				<script type="text/javascript" src="includes/fblogin.js"></script>
 			</div>
 		</div>
 	</body>
 </html>
+
