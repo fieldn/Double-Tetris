@@ -36,12 +36,13 @@ recoveryBoardRouter.use(function(req, res, next) {
 
 //temporarily saving board as a variable instead of in database
 var board = [];
+var score = 0;
 
 //when the route is '/recovery/board' and type of request is 'get'
 recoveryBoardRouter.get('/', function(req, res) {
 	//if board is empty, send and empty board
 	if (board.length == 0) {
-		res.json([[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+		res.json({'board': [[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
 [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
 [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
 [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
@@ -53,24 +54,38 @@ recoveryBoardRouter.get('/', function(req, res) {
 [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
 [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
 [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]
-]);
+], 'score':0});
 	} else {
 		//otherwise send the board that was saved and null out the board
-		res.json(board);
+		res.json({'board': board, 'score':score});
 		board = [];
+		score = 0;
 	}
 });
 
 recoveryBoardRouter.post('/', function(req, res) {
 	//console.log(req);
 
-	console.log(req.body);
-	console.log(req.body.game);
-	if (!req.body.game) {
+	if (!req.body.board) {
 		res.send({"status": "error", "message": "missing a board"});
+	} else if (!req.body.score) {
+		res.send({"status": "error", "messsage": "missing a score"});
 	} else {
-		board = req.body.game;
-		console.log("received: " + board);
+
+		
+		var height = req.body.board[0].length;
+		var width = req.body.board.length;
+		
+		for (var x = 0; x < width; x++) {
+			req.body.board[x][height-1] = null;	
+			req.body.board[x][height-2] = null;
+			req.body.board[x][height-3] = null;
+			req.body.board[x][height-4] = null;
+		}
+	
+		board = req.body.board;
+		score = req.body.score;
+		res.send({ "status": "error", "message": "updated board and score on server"});
 	}
 });
 
