@@ -105,7 +105,23 @@ var $game = $('.game').blockrain({
 			$("#play_button").attr('disabled', true);
 			$("#play_button").hide();
 			$(".blockrain-game-over-holder").show();
-		
+			
+			var score = parseInt($('.blockrain-score-num').text());
+			
+			$.ajax({
+						type: 'POST',
+						data: score,
+						dataType: 'json',
+						contentType: "application/x-www-form-urlencoded",
+						url: 'http://localhost:6001/recovery/board',
+						success: function(data) {
+							console.log(data);
+						},
+						error: function(XMLHttpRequest, textStatus, errorThrown) {
+							console.log("error sending post");
+						}
+				   }
+			);
 			
 		
 	}

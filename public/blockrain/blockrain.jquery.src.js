@@ -89,9 +89,9 @@
 	  
     },
     createBoard: function() {
-	console.log("data is: ");
-	var board = $('.game').blockrain.boardToSet;
-	this._createBoardFromArray(board);
+		console.log("data is: ");
+		var board = $('.game').blockrain.boardToSet;
+		this._createBoardFromArray(board);
     },
 	getboard: function() {
 		return this._board;
@@ -103,42 +103,12 @@
 	  //var value = 6;
 	  //console.log(this.getFromServer) //it is undefined, why
 	  if (this.options.getFromServer) {
-/*	  var starterArray =
-// 0,0 here
-[
-[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-[3   ,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-[3   ,3   ,null,null,null,null,null,null,null,null,null,null,null,null,null],
-[3   ,3   ,null,null,null,null,null,null,null,null,null,null,null,null,null],
-[3   ,3   ,null,null,null,null,null,null,null,null,null,null,null,null,null],
-[3   ,3   ,6   ,6   ,6   ,6   ,6   ,null,null,null,null,null,null,null,null],
-[4   ,4   ,6   ,6   ,6   ,6   ,6   ,null,null,null,null,null,null,null,null],
-[null,4   ,null,null,null,null,null,null,null,null,null,null,null,null,null],
-[3   ,3   ,null,null,null,null,null,null,null,null,null,null,null,null,null],
-[3   ,3   ,null,null,null,null,null,null,null,null,null,null,null,null,null],
-[3   ,3   ,null,null,null,null,null,null,null,null,null,null,null,null,null],
-[3   ,null,null,null,null,null,null,null,null,null,null,null,null,null,null]
-]*/
-	  var starterArray =
-[ /* 2 = 'T' piece */ /* 0 = 'I' piece */ /* 1 = '[]' piece */
-  /* 3 = backwards 'L' pliece */ /* 4 = 'L' piece */
-  /* 5 = 'Z' piece */ /* 6 = backwards 'Z' piece */
-[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-[1,2,null,null,null,null,null,null,null,null,null,null,null,null,null],
-[2,2,null,null,null,null,null,null,null,null,null,null,null,null,null],
-[1,2,null,null,null,null,null,null,null,null,null,null,null,null,null],
-[1,2,null,null,null,null,null,null,null,null,null,null,null,null,null],
-[5,5,null,null,null,null,null,null,null,null,null,null,null,null,null],
-[1,5,5,null,null,null,null,null,null,null,null,null,null,null,null],
-[1,2,3,null,null,null,null,null,null,null,null,null,null,null,null],
-[1,2,3,null,null,null,null,null,null,null,null,null,null,null,null],
-[1,3,3,null,null,null,null,null,null,null,null,null,null,null,null],
-[1,6,6,null,null,null,null,null,null,null,null,null,null,null,null],
-[6,6,null,null,null,null,null,null,null,null,null,null,null,null,null]
-]
-//zomg what a value
-//var starterArray = [[null],[null],[null],[null],[null, null, null, value]];		
-	  //this._createBoardFromArray(starterArray);
+		//var starterArray = "'999999999999999999999999999999999999999999999999999999999999999999999999999399300000000999333339999999999999999999999999999999999999999999999999999999999999999999999999999999999999";
+		//zomg what a value
+		/* 2 = 'T' piece */ /* 0 = 'I' piece */ /* 1 = '[]' piece */
+		/* 3 = backwards 'L' pliece */ /* 4 = 'L' piece */
+		/* 5 = 'Z' piece */ /* 6 = backwards 'Z' piece */
+		//this._createBoardFromArray(starterArray);
 	  }
       this._board.cur = this._board.nextShape();
 	  //console.log(this.started);
@@ -217,15 +187,17 @@
 		 */
 	_createBoardFromArray: function(array) {
 		var array;
+		//array will be one string full of numbers, 9 being null, 0-6 being an actual number
 		//console.log("Please see this");
-		var i, j, ilen=array.length, jlen=0;
+		var i, j;
         var  blockTypes = Object.keys(this._shapeFactory);
-		for (i=0; i<ilen; i++) {
+		for (i=0; i<12; i++) {
 
-			jlen = array[i].length;
-			for (j=0; j<jlen; j++) {
-				if (array[i][j] != null && array[i][j] != -1) {
-					var blockType = blockTypes[array[i][j]];
+			//jlen = array[i].length;
+			for (j=0; j<15; j++) {
+				var num = array.charAt((15*i) + j);//get char here
+				if (num != NaN && num <= 6) {
+					var blockType = blockTypes[num];
 					var blockVariation = 0;
 					var blockOrientation = 0;
 					//console.log("Adding at " + i + " " + j + " " + blockType + " " + blockVariation + " " + blockOrientation);
@@ -806,9 +778,9 @@
 		var array = [];			
 		var i, j, ilen=this._BLOCK_WIDTH, jlen=0;
 	    var keys = Object.keys(this._shapeFactory);
-		var string = "[";
+		var string = "";
 		for (i=0; i<ilen; i++) {
-			string+="[";
+			//string+="[";
 			var subArray = [];
 			jlen = this._BLOCK_HEIGHT;
 			for (j=jlen-1; j>=0; j--) {
@@ -817,7 +789,7 @@
 					for (var k = 0; k < keys.length; k++) {
 						if (keys[k] === type.blockType) {
 							//parsing to get an integer value from the string value		
-							string+= (k + ",");	
+							string+= (k);	
 							//console.log(k);		
 							subArray.push(k);
 							break;						
@@ -829,16 +801,16 @@
 				} else {
 					subArray.push(-1); //no blocks here
 					//console.log("nulling string");
-					string+="null,"
+					string+="9" //null string
 				}
 				
 			}
-			string+="],";
+			//string+="],";
 			array.push(subArray);
 		}
-		string+="]";
-		//console.log(string);
-		return array;
+		//string+="]";
+		console.log(string);
+		return string;
 		
 	},
 	getBoard : function() {

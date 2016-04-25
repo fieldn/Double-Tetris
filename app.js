@@ -28,6 +28,22 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // parse application/json 
 app.use(bodyParser.json())
 
+var ibmdb = require('ibm_db');
+
+ibmdb.open("DRIVER={DB2};DATABASE=SQLDB;HOSTNAME=75.126.155.153;UID=user17653;PWD=tjVBuwXpyqa5;PORT=50000;PROTOCOL=TCPIP", function (err,conn) {
+	if (err) return console.log("Error opening db");
+    console.log("Successfully opened db");
+    
+    var result = conn.querySync("insert into USERS (ID, OAUTH_PROVIDER, OAUTH_UID, USERNAME) values (4206969, 'jews', 'did', '9/11')");
+ 
+    conn.commitTransactionSync();
+ 
+    var query = conn.querySync("select * from USERS");
+    console.log(query);
+    
+    conn.closeSync();
+});
+
 //router to handle requests for getting/setting the last board in recovery mode
 var recoveryBoardRouter = express.Router();
 recoveryBoardRouter.use(function(req, res, next) {
