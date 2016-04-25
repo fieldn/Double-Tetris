@@ -15,10 +15,12 @@
 	<body>
 		<script type="text/javascript" src="includes/navbar.js"></script>
 
-		<div class="container" style="margin-left:60px; margin-right:60px">
+		<div class="container" >
 			<div class="jumbotron" style="  padding-right: 0px; padding-left: 0px">
 				<h1 class="text-center">Meet Your Worst Enemy: <strong>YOU</strong></h1>
 				<div class="center-block" align="center" style="margin-top: 50px">
+					<h3 class="text-center">Control two different boards at once! Make sure you don't lose track of the other.</h3>
+
 					<table align="center">
 						<tr>
 							<input type="button" class="btn-lg btn-primary" id="play_button" align="center" value="Play now!" style="margin-bottom: 30px"/>
@@ -60,11 +62,12 @@ var $game = $('.game').blockrain({
 		if ($('.blockrain-score-holder2')[0] != undefined) {
 			
 		} else {
-			$('.row').after( '<div class="blockrain-score-holder2" style="position:absolute; left: ' + ($('.row').offset().left+$('.row').width()/2 - 37) + 'px; top: '+($('.row').offset().top+500)+'px;">'+
-				  '<h2 div class="blockrain-score" style="position:relative; left:0px; top:0px; color:#c2ffad;">'+
-				'<div class="blockrain-score-msg">'+ 'Score' +'</div>'+
-				'<div class="blockrain-score-num">0</div>'+
-			  '</div>'+
+			$('.row').after( '<div class="blockrain-score-holder2" style="position:absolute; left: ' + ($('.row').offset().left+$('.row').width()/2 - 64) + 'px; top: '+($('.row').offset().top+600)+'px;">'+
+				  '<img src="images/blankslide.png">' + 
+				  '<h2 div class="blockrain-score" style="position:absolute; left:25px; top:0px; color:#c2ffad;">'+
+					'<div class="blockrain-score-msg">'+ 'Score' +'</div>'+
+					'<div class="blockrain-score-num">0</div>'+
+				  '</div>'+
 			'</div>');
 			$('.row').after( '<div class="blockrain-game-over-holder" style="position:absolute; left: ' + ($('.row').offset().left+$('.row').width()/2 - 100) + 'px; top: '+($('.row').offset().top+100)+'px;">'+
 			  '<img src="images/gameover.png">' + 

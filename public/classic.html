@@ -21,8 +21,12 @@
 					<h3 class="text-center">Classic mode, a blast from the past! Play the tetris mode that we all know and love.</h3>
 					<table align="center">
 						<tr>
-							<input type="button" class="btn-lg btn-primary" id="play_button" align="center" value="Play now!" style="margin-bottom: 30px"/>
-							<input type="button" class="btn-lg btn-primary" id="play_button_again" align="center" value="Play again!" style="margin-bottom: 30px"/>
+							<button class="btn" id="play_button" align="center" style="margin-bottom: 30px; padding: 0px">
+								<img src="images/play_button1.png"/>
+							</button>
+							<button class="btn" id="play_button_again" align="center" style="margin-bottom: 30px; padding: 0px">
+								<img src="images/play_again.png"/>
+							</button>
 						</tr>
 						<div class="jumbotron" id="gameHolder" style="background-color: #000">
 							<div class="game" id="tetris-demo" align="center"></div>
@@ -49,21 +53,18 @@ var $game = $('.game').blockrain({
 				scrollTop: $('.game').offset().top - 55
 			}, 'slow');
 
-			$('#gameHolder').before( '<h2 div class="blockrain-score-holder2" style="position:absolute; color:#F5F5F5;">'+
-			  '<div class="blockrain-score" style="position:relative; left:15px; top:60px">'+
+			$('#gameHolder').after( '<h2 div class="blockrain-score-holder2" style="position:absolute; color:#F5F5F5; left:' + ($('#gameHolder').offset().left - 40) + 'px; top:' + ($('#gameHolder').offset().top + 90) + 'px ">'+
+			'<img src="images/blankslide.png">' + 
+			'<h2 div class="blockrain-score" style="position:absolute; left:' + ($('#gameHolder').offset().left - 15) + 'px; top:' +  ($('#gameHolder').offset().top + 105) + 'px; color:#F5F5F5;">'+
 				'<div class="blockrain-score-msg">'+ 'Score' +'</div>'+
 				'<div class="blockrain-score-num">0</div>'+
-			  '</div>'+
+			'</div>'+
 			'</div>');
 			$('#gameHolder').after( '<GO div class="blockrain-game-over-holder" style="position:absolute; left: ' + ($('.blockrain-game-holder').offset().left+$('.blockrain-game-holder').width()/2 - 100) + 'px; top: '+($('.game').offset().top+100)+'px;">'+
 			  '<img src="images/gameover5.png">' + 
 			'</div>');
 			$(".blockrain-game-over-holder").hide();
-		
 
-
-
-		
 	},
 	onLine: function() {
 		//
@@ -76,9 +77,6 @@ var $game = $('.game').blockrain({
 			$("#play_button").hide();
 			$(".blockrain-game-over-holder").show();
 	
-	
-		
-		
 	}
 });
 

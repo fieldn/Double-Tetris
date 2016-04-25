@@ -6,3 +6,7 @@ body {
 	height: inherit;
     padding-bottom: 30px;
 }
+
+.input[type="file" i]::-webkit-file-upload-button, button {
+    background-color: #eee;
+}
