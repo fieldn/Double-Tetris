@@ -18,7 +18,7 @@
 			<div class="jumbotron">
 				<h1 class="text-center">Classic</h1>
 				<div class="center-block" align="center" style="margin-top: 50px; width:70%">
-					<h3 class="text-center">Classic mode, where you get a blast to the past. Play the same tetris mode that we all know and love!</h3>
+					<h3 class="text-center">Classic mode, a blast from the past! Play the tetris mode that we all know and love.</h3>
 					<table align="center">
 						<tr>
 							<input type="button" class="btn-lg btn-primary" id="play_button" align="center" value="Play now!" style="margin-bottom: 30px"/>
@@ -49,14 +49,14 @@ var $game = $('.game').blockrain({
 				scrollTop: $('.game').offset().top - 55
 			}, 'slow');
 
-			$('#gameHolder').before( '<h2 div class="blockrain-score-holder2" style="position:absolute; color:#c2ffad;">'+
+			$('#gameHolder').before( '<h2 div class="blockrain-score-holder2" style="position:absolute; color:#F5F5F5;">'+
 			  '<div class="blockrain-score" style="position:relative; left:15px; top:60px">'+
 				'<div class="blockrain-score-msg">'+ 'Score' +'</div>'+
 				'<div class="blockrain-score-num">0</div>'+
 			  '</div>'+
 			'</div>');
 			$('#gameHolder').after( '<GO div class="blockrain-game-over-holder" style="position:absolute; left: ' + ($('.blockrain-game-holder').offset().left+$('.blockrain-game-holder').width()/2 - 100) + 'px; top: '+($('.game').offset().top+100)+'px;">'+
-			  '<img src="images/gameover.png">' + 
+			  '<img src="images/gameover5.png">' + 
 			'</div>');
 			$(".blockrain-game-over-holder").hide();
 		
@@ -95,6 +95,5 @@ $('#play_button_again').click(function(event){
 				</script>
 			</div>
 		</div>
->>>>>>> e962b75367d56d4767e7a13ab184c2ae6a6291f0
 	</body>
 </html>
