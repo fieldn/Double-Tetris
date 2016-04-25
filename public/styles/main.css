@@ -10,3 +10,7 @@ body {
 .input[type="file" i]::-webkit-file-upload-button, button {
     background-color: #eee;
 }
+
+.h7 {
+	font-size: 40px;
+}

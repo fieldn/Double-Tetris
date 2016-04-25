@@ -1168,7 +1168,7 @@
 
       // Create the main holder (it holds all the ui elements, the original element is just the wrapper)
       this._$gameholder = $('<div class="blockrain-game-holder"></div>');
-      this._$gameholder.css('position', 'relative').css('width', '100%').css('height', '100%');
+      this._$gameholder.css('position', 'relative').css('width', '50%').css('height', '50%');
 
       this.element.html('').append(this._$gameholder);
 

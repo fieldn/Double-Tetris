@@ -28,10 +28,18 @@
 								<img src="images/play_again.png"/>
 							</button>
 						</tr>
-						<div class="jumbotron" id="gameHolder" style="background-color: #000">
-							<div class="game" id="tetris-demo" align="center"></div>
-						</div>
 					</table>
+				</div>
+				<div class="jumbotron" id="holder" style="background-color: #000; height: 100%; padding: 0px 10px 0px 10px; margin: 0px 30px 0px 30px">
+					<div class="col-md-2" id="scoreHolder2" style="color:#F5F5F5; padding-right: 10px;">
+						<h2 div class="blockrain-score" style="position:absolute; color:#F5F5F5; padding: 20px 0px 0px 20px; font-size: 40px;">
+							<div class="blockrain-score-msg">Score</div>
+							<div class="blockrain-score-num">0</div>
+						</h2>
+					</div>
+					<div class="col-md-10" id="gameHolder">
+						<div class="game" id="tetris-demo" align="right" style="padding-top: 20px;"></div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -53,16 +61,7 @@ var $game = $('.game').blockrain({
 				scrollTop: $('.game').offset().top - 55
 			}, 'slow');
 
-			$('#gameHolder').after( '<h2 div class="blockrain-score-holder2" style="position:absolute; color:#F5F5F5; left:' + ($('#gameHolder').offset().left - 40) + 'px; top:' + ($('#gameHolder').offset().top + 90) + 'px ">'+
-			'<img src="images/blankslide.png">' + 
-			'<h2 div class="blockrain-score" style="position:absolute; left:' + ($('#gameHolder').offset().left - 15) + 'px; top:' +  ($('#gameHolder').offset().top + 105) + 'px; color:#F5F5F5;">'+
-				'<div class="blockrain-score-msg">'+ 'Score' +'</div>'+
-				'<div class="blockrain-score-num">0</div>'+
-			'</div>'+
-			'</div>');
-			$('#gameHolder').after( '<GO div class="blockrain-game-over-holder" style="position:absolute; left: ' + ($('.blockrain-game-holder').offset().left+$('.blockrain-game-holder').width()/2 - 100) + 'px; top: '+($('.game').offset().top+100)+'px;">'+
-			  '<img src="images/gameover5.png">' + 
-			'</div>');
+			$('#holder').append('<div class="blockrain-game-over-holder" style="position:absolute; top:50%; left:42.5%"><img src="images/gameover8.png"></div>');
 			$(".blockrain-game-over-holder").hide();
 
 	},

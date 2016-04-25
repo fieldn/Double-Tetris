@@ -34,7 +34,7 @@ window.BlockrainThemes = {
   },
   'ours1': {
     background: '#000000',
-    backgroundGrid: 'assets/blocks/ours1/bg3.png',
+    backgroundGrid: 'assets/blocks/ours1/bg1.png',
     primary: null,
     secondary: null,
     stroke: '#000000',
