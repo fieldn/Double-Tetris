@@ -44,7 +44,7 @@ $(document).ready(function(){
 var $game = $('.game').blockrain({
 	getFromServer: true,
 	speed: 20,
-	theme: 'retro',
+	theme: 'ours1',
 	onStart: function() {
 		$("#play_button").hide();
 		$("#play_button_again").hide();
@@ -52,11 +52,12 @@ var $game = $('.game').blockrain({
 			scrollTop: $('.game').offset().top - 55
 		}, 'slow');
 
-		$('#gameHolder').before( '<h2 div class="blockrain-score-holder2" style="position:absolute; color:#c2ffad;">'+
-          '<div class="blockrain-score" style="position:relative; left:15px; top:60px">'+
-            '<div class="blockrain-score-msg">'+ 'Score' +'</div>'+
-            '<div class="blockrain-score-num">0</div>'+
-          '</div>'+
+		$('#gameHolder').after( '<h2 div class="blockrain-score-holder2" style="position:absolute; color:#c2ffad; left:' + ($('#gameHolder').offset().left - 40) + 'px; top:' + ($('#gameHolder').offset().top + 90) + 'px ">'+
+			'<img src="images/blankslide.png">' + 
+			'<h2 div class="blockrain-score" style="position:absolute; left:' + ($('#gameHolder').offset().left - 15) + 'px; top:' +  ($('#gameHolder').offset().top + 105) + 'px; color:#c2ffad;">'+
+				'<div class="blockrain-score-msg">'+ 'Score' +'</div>'+
+				'<div class="blockrain-score-num">0</div>'+
+			'</div>'+
         '</div>');
 		$('#gameHolder').after( '<GO div class="blockrain-game-over-holder" style="position:absolute; left: ' + ($('.blockrain-game-holder').offset().left+$('.blockrain-game-holder').width()/2 - 100) + 'px; top: '+($('.game').offset().top+100)+'px;">'+
           '<img src="images/gameover.png">' + 

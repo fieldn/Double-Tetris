@@ -243,8 +243,8 @@
      * Update the sizes of the renderer (this makes the game responsive)
      */
     updateSizes: function() {
-		var height = $(window).height();   // returns height of browser viewport
-		var width = $(window).width();   // returns width of browser viewport
+		var height = $("#gameHolder").height();   // returns height of browser viewport
+		var width = $("#gameHolder").width();   // returns width of browser viewport
 		
 		//this._PIXEL_WIDTH = this.element.innerWidth();
 		//this._PIXEL_HEIGHT = this.element.innerHeight();
@@ -256,7 +256,7 @@
 		this._PIXEL_WIDTH = width;
 		this._PIXEL_HEIGHT = height;
 		  
-		var factor = 0.4 * (width - 50);
+		var factor = 1* (width - 50);
 		$('.game').width(factor);
 		$('.game').height(factor * 1.2);
 
