@@ -87,11 +87,11 @@ var $game = $('.game').blockrain({
 		
 	},
 	onLine: function() {
-		//
+		
 	},
 	onGameOver: function(score){
 			
-			$(".game").blockrain("gameover");
+			$(".game").blockrain("tellgameover");
 			$("#play_button_again").show();
 			$("#play_button").attr('disabled', true);
 			$("#play_button").hide();

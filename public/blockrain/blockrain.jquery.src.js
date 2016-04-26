@@ -73,12 +73,17 @@
 	  this.gameWasStarted = true;
 
     },
-
+	tellgameover: function() {
+		this.gameWasSetOver = true;
+		this.gameWasStarted = false;
+		var array = this.getArrayFromBoard();
+		this.showGameOverMessage();
+		this._board.gameover = true;
+	},
     gameover: function() {
-
+		
 		  if (!this.gameWasSetOver) {
 			  this.gameWasStarted = false;
-			  this.gameWasSetOver = true;
 			  var array = this.getArrayFromBoard();
 			  this.showGameOverMessage();
 			  this._board.gameover = true;
@@ -189,7 +194,6 @@
 		var i, j;
         var  blockTypes = Object.keys(this._shapeFactory);
 		for (i=0; i<12; i++) {
-
 			//jlen = array[i].length;
 			for (j=0; j<15; j++) {
 				var num = array.charAt((15*i) + j);//get char here
