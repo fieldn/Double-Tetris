@@ -16,7 +16,7 @@
       difficulty: 'normal', // Difficulty (normal|nice|evil).
       speed: 20, // The speed of the game. The higher, the faster the pieces go.
       asdwKeys: true, // Enable ASDW keys
-	  IsDouble: false, //Allows us to ignore key input so one controls can control both games
+	  IsDouble: false,///Allows us to ignore key input so one controls can control both games
 	  gameWasSetOver: false,
 	  gamewasStarted: false,
       // Copy
@@ -217,7 +217,13 @@
     updateSizes: function() {
 		var height = $("#holder").height();   // returns height of browser viewport
 		var width = $("#holder").width();   // returns width of browser viewport
-		
+		if (this.options.IsDouble) {
+			console.log("we are double");
+			height = height * .75;
+			width = width * .6;
+		} else {
+			//nsole.log("not double" + this.IsDouble);
+		}
 		//this._PIXEL_WIDTH = this.element.innerWidth();
 		//this._PIXEL_HEIGHT = this.element.innerHeight();
 		  
@@ -227,7 +233,7 @@
 		  
 		this._PIXEL_WIDTH = width;
 		this._PIXEL_HEIGHT = height;
-		  
+		 
 		var factor = .6 * (width);
 		$('.game').width(factor);
 		$('.game').height(height * .9);

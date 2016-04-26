@@ -22,7 +22,7 @@
 				<h1 class="text-center">Meet Your Worst Enemy: <strong>YOU</strong></h1>
 				<div class="center-block" align="center" style="margin-top: 50px">
 					<h3 class="text-center">Control two different boards at once! Make sure you don't lose track of the other.</h3>
-					<table align="center">
+					<table align="center" id="gameBlackness" >
 						<tr>
 							<button class="btn" id="play_button" align="center" style="margin-bottom: 30px; padding: 0px">
 								<img src="images/play_button1.png"/>
@@ -33,19 +33,19 @@
 						</tr>
 					</table>
 					
-					<div class="holder" style="background-color: #000; border-radius:10px">
+					<div class="row" id="holder" style="background-color: #000; border-radius:10px">
 						<h2 div class="blockrain-score" style="position:relative; color:#F5F5F5; padding: 20px 0px 0px 20px; font-size: 40px;">
 							<div class="blockrain-score-msg">Score</div>
 							<div class="blockrain-score-num">0</div>
 						</h2>
 						<div class="col-md-6" style="padding-left:0; padding-right:10">
-							<div class="jumbotron" id="gameHolder" style="background-color: #000;  padding-right: 0px; padding-left: 0px">
+							<div class="jumbotron" id="stuff" style="background-color: #000;  padding-right: 0px; padding-left: 0px">
 								<div class="game" id="tetris-demo" align="center"></div>
 							</div>
 						</div>
 						
 						<div class="col-md-6" style="padding-left:10; padding-right:0">
-							<div class="jumbotron" id="gameHolder" style="background-color: #000;  padding-right: 0px; padding-left: 0px">
+							<div class="jumbotron" id="stuff" style="background-color: #000;  padding-right: 0px; padding-left: 0px">
 								<div class="game" id="tetris-demo" align="center"></div>
 							</div>
 						</div>
@@ -71,13 +71,13 @@ var $game = $('.game').blockrain({
 	onStart: function() {
 		console.log("starting");
 		
-		$('.holder').append('<div class="blockrain-game-over-holder" style="position:absolute; top:70%; left:42.5%"><img src="images/gameover8.png"></div>');
+		$('.row').append('<div class="blockrain-game-over-holder" style="position:absolute; top:70%; left:42.5%"><img src="images/gameover8.png"></div>');
 		$(".blockrain-game-over-holder").hide();
 	
 		$("#play_button").hide();
 		$("#play_button_again").hide();
 		$('html, body').animate({
-			scrollTop: $('.game').offset().top - 55
+			scrollTop: $('#gameBlackness').offset().top -55 
 		}, 'slow');
 		
 	
