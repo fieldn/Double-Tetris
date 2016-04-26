@@ -35,13 +35,14 @@ ibmdb.open("DRIVER={DB2};DATABASE=SQLDB;HOSTNAME=75.126.155.153;UID=user17653;PW
 	if (err) return console.log("Error opening db");
     console.log("Successfully opened db");
     
-    var result = conn.querySync("insert into USERS (ID, OAUTH_PROVIDER, OAUTH_UID, USERNAME) values (4206969, 'jews', 'did', '9/11')");
+    var result = conn.querySync("DELETE * FROM CLASSICSCORES");
+    var result2 = conn.querySync("DELETE * FROM RECOVERYSCORES");
+    var result3 = conn.querySync("DELETE * FROM YOWESCORES");
+    var result4 = conn.querySync("DELETE * FROM VERSUSSCORES");
+    var result5 = conn.querySync("DELETE * FROM RECOVERYTABLES");
  
     conn.commitTransactionSync();
- 
-    var query = conn.querySync("select * from USERS");
-    console.log(query);
-    
+     
     conn.closeSync();
 });
 */
@@ -74,12 +75,9 @@ recoveryBoardRouter.get('/', function(req, res) {
         //console.log("Successfully opened db");
     
         var query = conn.querySync("select * from RECOVERYTABLES");
-        
         console.log("Sending: ");
-        console.log(query);
-        
+        //console.log(query);
         var data = { 'data': query };
-        
         //console.log(data);
         res.json(data);
         
@@ -117,14 +115,36 @@ highscoreRouter.get('/', function(req, res) {
         //console.log("Successfully opened db");
         
         var recoveryScores = conn.querySync("select * from RECOVERYSCORES");
-        var yoweScores = conn.querySync("select * from YOWESCORES");
-        var classicScores = conn.querySync("select * from CLASSICSCORES");
-        
-        res.json({
-            'recoveryScores' : recoveryScores,
-            'yoweScores' : yoweScores,
-            'classicScores' : classicScores            
+        recoveryScores.sort(function(a,b) {
+            if (a.SCORE > b.SCORE)
+                return -1;
+            else if (a.SCORE < b.SCORE)
+                return 1;
+            return 0;
         });
+        var yoweScores = conn.querySync("select * from YOWESCORES");
+        yoweScores.sort(function(a,b) {
+            if (a.SCORE > b.SCORE)
+                return -1;
+            else if (a.SCORE < b.SCORE)
+                return 1;
+            return 0;
+        });
+        var classicScores = conn.querySync("select * from CLASSICSCORES");
+        classicScores.sort(function(a,b) {
+            if (a.SCORE > b.SCORE)
+                return -1;
+            else if (a.SCORE < b.SCORE)
+                return 1;
+            return 0;
+        });
+        res.json({
+            'recoveryScores' : recoveryScores.slice(0, 10),
+            'yoweScores' : yoweScores.slice(0, 10),
+            'classicScores' : classicScores.slice(0, 10)            
+        });
+        
+        conn.closeSync();
     });
 });
 
