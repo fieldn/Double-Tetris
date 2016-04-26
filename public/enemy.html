@@ -106,14 +106,15 @@ var $game = $('.game').blockrain({
 			$("#play_button").hide();
 			$(".blockrain-game-over-holder").show();
 			
+			var person = prompt("HIGH SCORE! Please enter your name", "");
 			var score = parseInt($('.blockrain-score-num').text());
-			
+			var data = { 'score' : score, 'username' : person };
 			$.ajax({
 						type: 'POST',
-						data: score,
+						data: data,
 						dataType: 'json',
 						contentType: "application/x-www-form-urlencoded",
-						url: 'http://localhost:6001/recovery/board',
+						url: 'http://tetris-heaven.mybluemix.net/highscores/enemy',
 						success: function(data) {
 							console.log(data);
 						},

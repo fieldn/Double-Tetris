@@ -89,20 +89,36 @@ var $game = $('.game').blockrain({
 		//save board on server?
 		var board = $('.game').blockrain('getArrayFromBoard');		
 		//console.log(game);
-		var score = $('.game').blockrain('score');
-		var data = { 'board': board, 'score': score };
-		
+		var data = { 'board' : bpard };
 		$.ajax({
 					type: 'POST',
 					data: data,
 					dataType: 'json',
 					contentType: "application/x-www-form-urlencoded",
-					url: 'http://localhost:6001/recovery/board',
+					url: 'http://tetris-heaven.mybluemix.net/recovery/board',
 					success: function(data) {
 						console.log(data);
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						console.log("error sending post");
+						console.log("error sending board");
+					}
+			   }
+		);
+		
+		var person = prompt("HIGH SCORE! Please enter your name", "");
+		var score = $('.game').blockrain('score');
+		var data = { 'score' : score, 'username' : person };
+		$.ajax({
+					type: 'POST',
+					data: data,
+					dataType: 'json',
+					contentType: "application/x-www-form-urlencoded",
+					url: 'http://tetris-heaven.mybluemix.net/highscores/recovery',
+					success: function(data) {
+						console.log(data);
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						console.log("error sending score");
 					}
 			   }
 		);
