@@ -104,11 +104,7 @@
 	  //console.log(this.getFromServer) //it is undefined, why
 	  if (this.options.getFromServer) {
 		//var starterArray = "'999999999999999999999999999999999999999999999999999999999999999999999999999399300000000999333339999999999999999999999999999999999999999999999999999999999999999999999999999999999999";
-		//zomg what a value
-		/* 2 = 'T' piece */ /* 0 = 'I' piece */ /* 1 = '[]' piece */
-		/* 3 = backwards 'L' pliece */ /* 4 = 'L' piece */
-		/* 5 = 'Z' piece */ /* 6 = backwards 'Z' piece */
-		//this._createBoardFromArray(starterArray);
+		//set paused here TODO
 	  }
       this._board.cur = this._board.nextShape();
 	  //console.log(this.started);
@@ -189,6 +185,7 @@
 		var array;
 		//array will be one string full of numbers, 9 being null, 0-6 being an actual number
 		//console.log("Please see this");
+		if (array.length() < 175) return;
 		var i, j;
         var  blockTypes = Object.keys(this._shapeFactory);
 		for (i=0; i<12; i++) {
