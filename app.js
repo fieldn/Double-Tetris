@@ -76,9 +76,9 @@ recoveryBoardRouter.get('/', function(req, res) {
     
         var query = conn.querySync("select * from RECOVERYTABLES");
         console.log("Sending: ");
-        //console.log(query);
+        console.log(query);
         var data = { 'data': query };
-        //console.log(data);
+        console.log(data);
         res.json(data);
         
         conn.closeSync();
@@ -253,8 +253,8 @@ recoveryBoardRouter.post('/', function(req, res) {
             if (err) return console.log("Error opening db");
             //console.log("Successfully opened db");
             
-            var stmt = conn.prepareSync("insert into RECOVERYTABLES (AVGSCORE, BOARD) values (?, ?)");
-            stmt.execute([0, board], function(err, result) {
+            var stmt = conn.prepareSync("insert into RECOVERYTABLES (BOARD, SCORE) values (?, ?)");
+            stmt.execute([board, 0], function(err, result) {
                 if (err) {
                     //console.log("Error inserting to db");
                     conn.closeSync();
