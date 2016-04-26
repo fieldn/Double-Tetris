@@ -64,11 +64,19 @@ var $game = $('.game').blockrain({
 		$(".blockrain-game-over-holder").hide();
 	
 		$.get("recovery/board", function(data) {
-			console.log("board is " + data.board);
-			board = data.board;
-			$('.game').blockrain.boardToSet = board;
-			console.log($('.game').blockrain.boardToSet);
-			$('.game').blockrain('createBoard');
+			var length = data.data.length;
+            var randRow = Math.floor(Math.random() * (length-1)) + 0;
+            var board = data.data[randRow];
+            console.log(randRow);
+            console.log(board.BOARD);
+            
+            $('.game').blockrain.boardToSet = board.BOARD;
+            $('.game').blockrain('createBoard');
+            
+            //board = data.board;
+			//$('.game').blockrain.boardToSet = board;
+			//console.log($('.game').blockrain.boardToSet);
+			//$('.game').blockrain('createBoard');
 		});
 	},
 	onLine: function() {
@@ -88,13 +96,13 @@ var $game = $('.game').blockrain({
 		//save board on server?
 		var board = $('.game').blockrain('getArrayFromBoard');		
 		//console.log(game);
-		var data = { 'board' : bpard };
+		var data = { 'board' : board };
 		$.ajax({
 					type: 'POST',
 					data: data,
 					dataType: 'json',
 					contentType: "application/x-www-form-urlencoded",
-					url: 'http://tetris-heaven.mybluemix.net/recovery/board',
+					url: 'http://localhost:6001/recovery/board',
 					success: function(data) {
 						console.log(data);
 					},
@@ -112,7 +120,7 @@ var $game = $('.game').blockrain({
 					data: data,
 					dataType: 'json',
 					contentType: "application/x-www-form-urlencoded",
-					url: 'http://tetris-heaven.mybluemix.net/highscores/recovery',
+					url: 'http://localhost:6001/highscores/recovery',
 					success: function(data) {
 						console.log(data);
 					},
