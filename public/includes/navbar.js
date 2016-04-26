@@ -16,7 +16,7 @@ document.write(
 "			<div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>" +
 "				<ul class='nav navbar-nav'>" +
 "					<li><a href='recovery.html'>Recovery</a></li>" +
-"					<li><a href='versus.html'>Versus</a></li>" +
+//"					<li><a href='versus.html'>Versus</a></li>" +
 "					<li><a href='enemy.html'>Your Own Worst Enemy</a></li>" +
 "					<li><a href='classic.html'>Classic</a></li>" +
 "					<li><a href='leaderboard.html'>Leaderboard</a></li>" +
