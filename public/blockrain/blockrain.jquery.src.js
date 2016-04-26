@@ -185,7 +185,7 @@
 		var array;
 		//array will be one string full of numbers, 9 being null, 0-6 being an actual number
 		//console.log("Please see this");
-		if (array.length() < 175) return;
+		if (array.length < 175) return;
 		var i, j;
         var  blockTypes = Object.keys(this._shapeFactory);
 		for (i=0; i<12; i++) {
