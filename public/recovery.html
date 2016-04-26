@@ -72,10 +72,12 @@ var $game = $('.game').blockrain({
             var board = data.data[randRow];
             console.log(randRow);
             console.log(board.BOARD);
-            $('.game').blockrain.boardToSet = board.BOARD;
-            $('.game').blockrain('createBoard');
-            $('.game').blockrain('resume');
-			finished = true;
+			if (!finished) {
+				$('.game').blockrain.boardToSet = board.BOARD;
+				$('.game').blockrain('createBoard');
+				$('.game').blockrain('resume');
+				finished = true;
+			}
 		});
 		
 		//unpause eventually
@@ -83,8 +85,9 @@ var $game = $('.game').blockrain({
 			if (!finished) {
 				alert("Could not load board");
 				$('.game').blockrain('resume');
+				finished = true;
 			}
-		} ,1000 );
+		} ,30000 );
 		
 		
 	},
