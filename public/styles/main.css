@@ -14,3 +14,13 @@ body {
 .h7 {
 	font-size: 40px;
 }
+
+.blockrain-game-over-holder {
+   position: absolute;
+   top: 70%;
+   left: 50%;
+   width: 213px;
+   height: 500px;
+   /*margin-top: -250px;  Half the height */
+   margin-left: -106.5px; /* Half the width */
+}
