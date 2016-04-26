@@ -60,7 +60,7 @@ var $game = $('.game').blockrain({
 		$('html, body').animate({
 			scrollTop: $('.game').offset().top - 55
 		}, 'slow');
-		$('#holder').append('<div class="blockrain-game-over-holder" style="position:absolute; top:50%; left:42.5%"><img src="images/gameover8.png"></div>');
+		$('#holder').append('<div class="blockrain-game-over-holder" style="position:absolute; top:70%; left:42.5%"><img src="images/gameover8.png"></div>');
 		$(".blockrain-game-over-holder").hide();
 	
 		$.get("recovery/board", function(data) {
@@ -88,7 +88,7 @@ var $game = $('.game').blockrain({
 		//save board on server?
 		var board = $('.game').blockrain('getArrayFromBoard');		
 		//console.log(game);
-		var data = { 'board' : bpard };
+		var data = { 'board' : board };
 		$.ajax({
 					type: 'POST',
 					data: data,
