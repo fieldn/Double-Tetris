@@ -197,7 +197,7 @@
 			//jlen = array[i].length;
 			for (j=0; j<15; j++) {
 				var num = array.charAt((15*i) + j);//get char here
-				if (num != NaN && num <= 6) {
+				if (num != NaN && num <= 6 && j < 12) {
 					var blockType = blockTypes[num];
 					var blockVariation = 0;
 					var blockOrientation = 0;
