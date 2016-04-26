@@ -18,7 +18,7 @@
 				<h1 class="text-center">Recovery</h1>
 				<div class="center-block" align="center" style="margin-top: 50px; width:70%">
 					<h3 class="text-center">Recovery mode! You will get a board that another user was about to fail with, try to see if you can do better!</h3>
-					<table align="center">
+					<table align="center" id="gameBlackness" >
 						<tr>
 							<button class="btn" id="play_button" align="center" style="margin-bottom: 30px; padding: 0px">
 								<img src="images/play_button1.png"/>
@@ -58,9 +58,9 @@ var $game = $('.game').blockrain({
 		$("#play_button").hide();
 		$("#play_button_again").hide();
 		$('html, body').animate({
-			scrollTop: $('.game').offset().top - 55
+			scrollTop: $('#gameBlackness').offset().top -55 
 		}, 'slow');
-		$('#holder').append('<div class="blockrain-game-over-holder" style="position:absolute; top:50%; left:42.5%"><img src="images/gameover8.png"></div>');
+		$('#holder').append('<div class="blockrain-game-over-holder" style="position:absolute; top:70%; left:42.5%"><img src="images/gameover8.png"></div>');
 		$(".blockrain-game-over-holder").hide();
 	
 		$.get("recovery/board", function(data) {

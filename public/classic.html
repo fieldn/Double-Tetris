@@ -18,7 +18,7 @@
 				<h1 class="text-center">Classic</h1>
 				<div class="center-block" align="center" style="margin-top: 50px; width:70%">
 					<h3 class="text-center">Classic mode, a blast from the past! Play the tetris mode that we all know and love.</h3>
-					<table align="center">
+					<table align="center" id="gameBlackness" >
 						<tr>
 							<button class="btn" id="play_button" align="center" style="margin-bottom: 30px; padding: 0px">
 								<img src="images/play_button1.png"/>
@@ -57,7 +57,7 @@ var $game = $('.game').blockrain({
 			$("#play_button").hide();
 			$("#play_button_again").hide();
 			$('html, body').animate({
-				scrollTop: $('.game').offset().top - 55
+			scrollTop: $('#gameBlackness').offset().top -55 
 			}, 'slow');
 
 			$('#holder').append('<div class="blockrain-game-over-holder" style="position:absolute; top:50%; left:42.5%"><img src="images/gameover8.png"></div>');
