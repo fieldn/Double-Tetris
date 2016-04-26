@@ -50,6 +50,14 @@ recoveryBoardRouter.use(function(req, res, next) {
 	next();
 });
 
+
+var highscoresRouter = express.Router();
+highscoresRouter.use(function(req, res, next) {
+	next();
+});
+
+
+
 //temporarily saving board as a variable instead of in database
 var board = [];
 var score = 0;
@@ -79,6 +87,43 @@ recoveryBoardRouter.get('/', function(req, res) {
 	}
 });
 
+highscoresRouter.post('/recovery', function(req, res) {
+    if (!req.body.score) {
+        res.send({"status": "error", "message": "missing a score"});
+    } else if (!req.body.username) {
+        res.send({"status": "error", "message": "missing a username"});
+    }
+    
+    var score = req.body.score;
+    var username = req.body.username;
+    
+    ibmdb.open("DRIVER={DB2};DATABASE=SQLDB;HOSTNAME=75.126.155.153;UID=user17653;PWD=tjVBuwXpyqa5;PORT=50000;PROTOCOL=TCPIP", function (err,conn) {
+        if (err) return console.log("Error opening db");
+        console.log("Successfully opened db");
+        var stmt = conn.prepareSync("insert into RECOVERYSCORES (NAME, SCORE) values (?, ?)");
+        stmt.execute([username, score], function(err, result) {
+                if (err) {
+                    console.log("Error inserting to db");
+                    conn.closeSync();
+                    return;
+                }
+                result.closeSync();
+                conn.closeSync();
+            });
+    });
+
+});
+
+highscoresRouter.post('/classic', function(req, res) {
+
+
+
+});
+
+highscoresRouter.post('/enemy', function(req, res) {
+
+});
+
 recoveryBoardRouter.post('/', function(req, res) {
 	//console.log(req);
 
@@ -87,24 +132,41 @@ recoveryBoardRouter.post('/', function(req, res) {
 	} else if (!req.body.score) {
 		res.send({"status": "error", "messsage": "missing a score"});
 	} else {
-
-		
-		var height = req.body.board[0].length;
-		var width = req.body.board.length;
-		
-		for (var x = 0; x < width; x++) {
-			req.body.board[x][height-1] = null;	
-			req.body.board[x][height-2] = null;
-			req.body.board[x][height-3] = null;
-			req.body.board[x][height-4] = null;
-		}
-	
-		board = req.body.board;
-		score = req.body.score;
+        
+        
+        var board = req.body.board;
+        var ROW_LENGTH = 15;
+        var ROW_COUNT = 3;
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 12; j++) {
+                if (j < (15-3))
+                    continue;
+                board[i * 15 + j] = '9';
+            }
+        }
+        ibmdb.open("DRIVER={DB2};DATABASE=SQLDB;HOSTNAME=75.126.155.153;UID=user17653;PWD=tjVBuwXpyqa5;PORT=50000;PROTOCOL=TCPIP", function (err,conn) {
+            if (err) return console.log("Error opening db");
+            console.log("Successfully opened db");
+            
+            var stmt = conn.prepareSync("insert into RECOVERYTABLES (AVGSCORE, BOARD) values (?, ?)");
+            stmt.execute([0, board], function(err, result) {
+                if (err) {
+                    console.log("Error inserting to db");
+                    conn.closeSync();
+                    return;
+                }
+                result.closeSync();
+                conn.closeSync();
+            });            
+        });
+   
+		//board = req.body.board;
+		//score = req.body.score;
 		res.send({ "status": "error", "message": "updated board and score on server"});
 	}
 });
 
+app.use('/highscores', highscoresRouter);
 app.use('/recovery/board', recoveryBoardRouter);
 
 // start server on the specified port and binding host
