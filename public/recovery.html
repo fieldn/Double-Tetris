@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html>
-	
+<html>	
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,11 +6,11 @@
 		<title>Recovery - Tetris Heaven</title>
 		<link rel="icon" type="image/gif" href="images/animated_favicon1.gif">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<link href="styles/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="styles/bootstrap-3.3.6-dist/css/bootstrap-theme.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="styles/main.css">
 	</head>
-	
 	<body>
 		<script type="text/javascript" src="includes/navbar.js"></script>
 		<div class = "container">
@@ -22,22 +20,33 @@
 					<h3 class="text-center">Recovery mode! You will get a board that another user was about to fail with, try to see if you can do better!</h3>
 					<table align="center">
 						<tr>
-							<input type="button" class="btn-lg btn-primary" id="play_button" align="center" value="Play now!" style="margin-bottom: 30px"/>
-							<input type="button" class="btn-lg btn-primary" id="play_button_again" align="center" value="Play again!" style="margin-bottom: 30px"/>
+							<button class="btn" id="play_button" align="center" style="margin-bottom: 30px; padding: 0px">
+								<img src="images/play_button1.png"/>
+							</button>
+							<button class="btn" id="play_button_again" align="center" style="margin-bottom: 30px; padding: 0px">
+								<img src="images/play_again.png"/>
+							</button>
 						</tr>
-						<div class="jumbotron" id="gameHolder" style="background-color: #000">
-							<div class="game" id="tetris-demo" align="center"></div>
-						</div>
 					</table>
+				</div>
+				<div class="jumbotron" id="holder" style="background-color: #000; height: 100%; padding: 0px 10px 0px 10px; margin: 0px 30px 0px 30px">
+					<div class="col-md-2" id="scoreHolder2" style="color:#F5F5F5; padding-right: 10px;">
+						<h2 div class="blockrain-score" style="position:absolute; color:#F5F5F5; padding: 20px 0px 0px 20px; font-size: 40px;">
+							<div class="blockrain-score-msg">Score</div>
+							<div class="blockrain-score-num">0</div>
+						</h2>
+					</div>
+					<div class="col-md-10" id="gameHolder">
+						<div class="game" id="tetris-demo" align="right" style="padding-top: 20px;"></div>
+					</div>
 				</div>
 			</div>
 		</div>
-				
-				<script src="./blockrain/jquery-1.11.1.min.js"></script>
-				<script src="./blockrain/blockrain.jquery.libs.js"></script>
-				<script src="./blockrain/blockrain.jquery.src.js"></script>
-				<script src="./blockrain/blockrain.jquery.themes.js"></script>
-				<script>
+			<script src="./blockrain/jquery-1.11.1.min.js"></script>
+			<script src="./blockrain/blockrain.jquery.libs.js"></script>
+			<script src="./blockrain/blockrain.jquery.src.js"></script>
+			<script src="./blockrain/blockrain.jquery.themes.js"></script>
+			<script>
 $(document).ready(function(){
 	$("#play_button_again").hide();
 });
@@ -51,19 +60,9 @@ var $game = $('.game').blockrain({
 		$('html, body').animate({
 			scrollTop: $('.game').offset().top - 55
 		}, 'slow');
-
-		$('#gameHolder').after( '<h2 div class="blockrain-score-holder2" style="position:absolute; color:#c2ffad; left:' + ($('#gameHolder').offset().left - 40) + 'px; top:' + ($('#gameHolder').offset().top + 90) + 'px ">'+
-			'<img src="images/blankslide.png">' + 
-			'<h2 div class="blockrain-score" style="position:absolute; left:' + ($('#gameHolder').offset().left - 15) + 'px; top:' +  ($('#gameHolder').offset().top + 105) + 'px; color:#c2ffad;">'+
-				'<div class="blockrain-score-msg">'+ 'Score' +'</div>'+
-				'<div class="blockrain-score-num">0</div>'+
-			'</div>'+
-        '</div>');
-		$('#gameHolder').after( '<GO div class="blockrain-game-over-holder" style="position:absolute; left: ' + ($('.blockrain-game-holder').offset().left+$('.blockrain-game-holder').width()/2 - 100) + 'px; top: '+($('.game').offset().top+100)+'px;">'+
-          '<img src="images/gameover.png">' + 
-        '</div>');
+		$('#holder').append('<div class="blockrain-game-over-holder" style="position:absolute; top:50%; left:42.5%"><img src="images/gameover8.png"></div>');
 		$(".blockrain-game-over-holder").hide();
-
+	
 		$.get("recovery/board", function(data) {
 			console.log("board is " + data.board);
 			board = data.board;
