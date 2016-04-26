@@ -158,6 +158,8 @@ highscoreRouter.post('/recovery', function(req, res) {
     
     var score = req.body.score;
     var username = req.body.username;
+    if (username.length == 0)
+        return;
     
     ibmdb.open("DRIVER={DB2};DATABASE=SQLDB;HOSTNAME=75.126.155.153;UID=user17653;PWD=tjVBuwXpyqa5;PORT=50000;PROTOCOL=TCPIP", function (err,conn) {
         if (err) return console.log("Error opening db");
@@ -184,6 +186,8 @@ highscoreRouter.post('/classic', function(req, res) {
     
     var score = req.body.score;
     var username = req.body.username;
+    if (username.length == 0)
+        return;
     
     ibmdb.open("DRIVER={DB2};DATABASE=SQLDB;HOSTNAME=75.126.155.153;UID=user17653;PWD=tjVBuwXpyqa5;PORT=50000;PROTOCOL=TCPIP", function (err,conn) {
         if (err) return console.log("Error opening db");
@@ -212,6 +216,8 @@ highscoreRouter.post('/enemy', function(req, res) {
     
     var score = req.body.score;
     var username = req.body.username;
+    if (username.length == 0)
+        return;
     
     ibmdb.open("DRIVER={DB2};DATABASE=SQLDB;HOSTNAME=75.126.155.153;UID=user17653;PWD=tjVBuwXpyqa5;PORT=50000;PROTOCOL=TCPIP", function (err,conn) {
         if (err) return console.log("Error opening db");
